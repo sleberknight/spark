@@ -10,12 +10,14 @@ micro web framework for Java. Published as `com.dsingley.sparkjava:spark-core`.
 
 ## Branching
 
-- **`master` is the default branch, but it is not where active development happens.**
-- All current work happens on **`ossrh`** — the branch dsingley intends to eventually
-  use for a Maven Central (OSSRH) release. PRs target `ossrh`, not `master`.
-- Because of this, **GitHub's `Closes #N` / `Fixes #N` auto-close does not work** — it
-  only fires when a PR merges into the repository's default branch. Issues referenced
-  by a PR merged into `ossrh` must be closed manually after the merge.
+- **`ossrh` is this fork's default branch** — all current work happens here, and it's
+  the branch dsingley intends to eventually use for a Maven Central (OSSRH) release.
+  PRs target `ossrh`. GitHub's `Closes #N` / `Fixes #N` auto-close works normally
+  since this is the default branch.
+- The upstream repo, [dsingley/spark](https://github.com/dsingley/spark), still has
+  `master` as its default branch — that's independent of this fork's setting, so keep
+  it in mind when eventually opening a PR back upstream (the base branch there may
+  not be `ossrh`).
 - This repo is configured for **squash merges only**, with the squash commit message
   defaulting to "PR title and description" — so PR titles and descriptions should be
   written as the commit message they'll become.
