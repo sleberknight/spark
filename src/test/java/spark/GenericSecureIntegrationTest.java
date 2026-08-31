@@ -113,7 +113,7 @@ public class GenericSecureIntegrationTest {
     @Test
     public void testGetHiAfterFilter() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/hi", null);
-        assertThat(response.headers.get("after").contains("foobar")).isTrue();
+        assertThat(response.headers.get("after")).contains("foobar");
     }
 
     @Test
@@ -155,13 +155,13 @@ public class GenericSecureIntegrationTest {
     @Test
     public void testUnauthorized() throws Exception {
         UrlResponse urlResponse = testUtil.doMethodSecure("GET", "/protected/resource", null);
-        assertThat(urlResponse.status == 401).isTrue();
+        assertThat(urlResponse.status).isEqualTo(401);
     }
 
     @Test
     public void testNotFound() throws Exception {
         UrlResponse urlResponse = testUtil.doMethodSecure("GET", "/no/resource", null);
-        assertThat(urlResponse.status == 404).isTrue();
+        assertThat(urlResponse.status).isEqualTo(404);
     }
 
     @Test
@@ -170,7 +170,7 @@ public class GenericSecureIntegrationTest {
         LOGGER.info(response.body);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(201),
-                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+                () -> assertThat(response.body).contains("Fo shizzy")
         );
     }
 
@@ -180,7 +180,7 @@ public class GenericSecureIntegrationTest {
         LOGGER.info(response.body);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+                () -> assertThat(response.body).contains("Fo shizzy")
         );
     }
 }

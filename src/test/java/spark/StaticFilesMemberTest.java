@@ -184,7 +184,7 @@ public class StaticFilesMemberTest {
 
         assertAll(
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(FO_SHIZZY)).isTrue()
+                () -> assertThat(response.body).contains(FO_SHIZZY)
         );
     }
 

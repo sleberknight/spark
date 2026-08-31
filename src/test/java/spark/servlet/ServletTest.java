@@ -99,7 +99,7 @@ public class ServletTest {
     @Test
     public void testGetHiAfterFilter() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/hi", null);
-        assertThat(response.headers.get("after").contains("foobar")).isTrue();
+        assertThat(response.headers.get("after")).contains("foobar");
     }
 
     @Test
@@ -132,13 +132,13 @@ public class ServletTest {
     @Test
     public void testUnauthorized() throws Exception {
         UrlResponse urlResponse = testUtil.doMethod("GET", SOMEPATH + "/protected/resource", null);
-        assertThat(urlResponse.status == 401).isTrue();
+        assertThat(urlResponse.status).isEqualTo(401);
     }
 
     @Test
     public void testNotFound() throws Exception {
         UrlResponse urlResponse = testUtil.doMethod("GET", SOMEPATH + "/no/resource", null);
-        assertThat(urlResponse.status == 404).isTrue();
+        assertThat(urlResponse.status).isEqualTo(404);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class ServletTest {
         UrlResponse response = testUtil.doMethod("POST", SOMEPATH + "/poster", "Fo shizzy");
         assertAll(
                 () -> assertThat(response.status).isEqualTo(201),
-                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+                () -> assertThat(response.body).contains("Fo shizzy")
         );
     }
 
@@ -155,7 +155,7 @@ public class ServletTest {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/css/style.css", null);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains("Content of css file")).isTrue()
+                () -> assertThat(response.body).contains("Content of css file")
         );
     }
 
@@ -164,7 +164,7 @@ public class ServletTest {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/pages/", null);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains("<html><body>Hello Static World!</body></html>")).isTrue()
+                () -> assertThat(response.body).contains("<html><body>Hello Static World!</body></html>")
         );
     }
 

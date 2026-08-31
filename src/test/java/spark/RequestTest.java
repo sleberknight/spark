@@ -242,7 +242,7 @@ public class RequestTest {
         when(servletRequest.getCookies()).thenReturn(cookieArray);
 
         assertAll(
-                () -> assertThat(request.cookies().size() == 2).as("The count of cookies returned should be the same as those in the request").isTrue(),
+                () -> assertThat(request.cookies()).as("The count of cookies returned should be the same as those in the request").hasSize(2),
                 () -> assertThat(request.cookies()).as("A Map of Cookies should have been returned because they exist").isEqualTo(expected)
         );
 
@@ -255,7 +255,7 @@ public class RequestTest {
 
         assertAll(
                 () -> assertThat(request.cookies()).as("A Map of Cookies should have been instantiated even if cookies are not present in the request").isNotNull(),
-                () -> assertThat(request.cookies().size() == 0).as("The Map of cookies should be empty because cookies are not present in the request").isTrue()
+                () -> assertThat(request.cookies()).as("The Map of cookies should be empty because cookies are not present in the request").isEmpty()
         );
 
     }

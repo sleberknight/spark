@@ -74,7 +74,7 @@ public class BodyAvailabilityTest {
         LOGGER.info(response.body);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(HTTP_OK),
-                () -> assertThat(response.body.contains(BODY_CONTENT)).isTrue(),
+                () -> assertThat(response.body).contains(BODY_CONTENT),
                 () -> assertThat(beforeBody).isEqualTo(BODY_CONTENT),
                 () -> assertThat(routeBody).isEqualTo(BODY_CONTENT),
                 () -> assertThat(afterBody).isEqualTo(BODY_CONTENT)

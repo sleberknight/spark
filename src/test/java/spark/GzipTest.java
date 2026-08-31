@@ -69,7 +69,7 @@ public class GzipTest {
 
         assertAll(
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(GzipExample.FO_SHIZZY)).isTrue()
+                () -> assertThat(response.body).contains(GzipExample.FO_SHIZZY)
         );
     }
 

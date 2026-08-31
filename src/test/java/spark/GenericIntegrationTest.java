@@ -221,7 +221,7 @@ public class GenericIntegrationTest {
     public void filters_should_be_accept_type_aware() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/protected/resource", null, "application/json");
         assertAll(
-                () -> assertThat(response.status == 401).isTrue(),
+                () -> assertThat(response.status).isEqualTo(401),
                 () -> assertThat(response.body).isEqualTo("{\"message\": \"Go Away!\"}")
         );
     }
@@ -298,7 +298,7 @@ public class GenericIntegrationTest {
     @Test
     public void testGetHiAfterFilter() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/hi", null);
-        assertThat(response.headers.get("after").contains("foobar")).isTrue();
+        assertThat(response.headers.get("after")).contains("foobar");
     }
 
     @Test
@@ -444,13 +444,13 @@ public class GenericIntegrationTest {
     @Test
     public void testUnauthorized() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/secretcontent/whateva", null);
-        assertThat(response.status == 401).isTrue();
+        assertThat(response.status).isEqualTo(401);
     }
 
     @Test
     public void testNotFound() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/no/resource", null);
-        assertThat(response.status == 404).isTrue();
+        assertThat(response.status).isEqualTo(404);
     }
 
     @Test
@@ -459,7 +459,7 @@ public class GenericIntegrationTest {
         LOGGER.info(response.body);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(201),
-                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+                () -> assertThat(response.body).contains("Fo shizzy")
         );
     }
 
@@ -471,7 +471,7 @@ public class GenericIntegrationTest {
         System.out.println(response.body);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(201),
-                () -> assertThat(response.body.contains("Method Override Worked")).isTrue()
+                () -> assertThat(response.body).contains("Method Override Worked")
         );
     }
 
@@ -481,7 +481,7 @@ public class GenericIntegrationTest {
         LOGGER.info(response.body);
         assertAll(
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+                () -> assertThat(response.body).contains("Fo shizzy")
         );
     }
 
@@ -567,7 +567,7 @@ public class GenericIntegrationTest {
     public void path_should_prefix_routes() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/firstPath/test", null, "application/json");
         assertAll(
-                () -> assertThat(response.status == 200).isTrue(),
+                () -> assertThat(response.status).isEqualTo(200),
                 () -> assertThat(response.body).isEqualTo("Single path-prefix works"),
                 () -> assertThat(response.headers.get("before-filter-ran")).isEqualTo("true")
         );
@@ -577,7 +577,7 @@ public class GenericIntegrationTest {
     public void paths_should_be_nestable() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/firstPath/secondPath/test", null, "application/json");
         assertAll(
-                () -> assertThat(response.status == 200).isTrue(),
+                () -> assertThat(response.status).isEqualTo(200),
                 () -> assertThat(response.body).isEqualTo("Nested path-prefix works"),
                 () -> assertThat(response.headers.get("before-filter-ran")).isEqualTo("true")
         );
@@ -587,7 +587,7 @@ public class GenericIntegrationTest {
     public void paths_should_be_very_nestable() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/firstPath/secondPath/thirdPath/test", null, "application/json");
         assertAll(
-                () -> assertThat(response.status == 200).isTrue(),
+                () -> assertThat(response.status).isEqualTo(200),
                 () -> assertThat(response.body).isEqualTo("Very nested path-prefix works"),
                 () -> assertThat(response.headers.get("before-filter-ran")).isEqualTo("true")
         );

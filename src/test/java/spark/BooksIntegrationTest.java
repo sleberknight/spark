@@ -65,7 +65,7 @@ public class BooksIntegrationTest {
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
-                () -> assertThat(Integer.valueOf(response.body) > 0).isTrue(),
+                () -> assertThat(Integer.valueOf(response.body)).isPositive(),
                 () -> assertThat(response.status).isEqualTo(201)
         );
     }
@@ -79,9 +79,9 @@ public class BooksIntegrationTest {
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
-                () -> assertThat(Integer.valueOf(response.body.trim()) > 0).isTrue(),
+                () -> assertThat(Integer.valueOf(response.body.trim())).isPositive(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(bookId)).isTrue()
+                () -> assertThat(response.body).contains(bookId)
         );
     }
 
@@ -95,8 +95,8 @@ public class BooksIntegrationTest {
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(AUTHOR)).isTrue(),
-                () -> assertThat(response.body.contains(TITLE)).isTrue(),
+                () -> assertThat(response.body).contains(AUTHOR),
+                () -> assertThat(response.body).contains(TITLE),
                 () -> assertThat(beforeFilterIsSet(response)).isTrue(),
                 () -> assertThat(afterFilterIsSet(response)).isTrue()
         );
@@ -112,8 +112,8 @@ public class BooksIntegrationTest {
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(bookId)).isTrue(),
-                () -> assertThat(response.body.contains("updated")).isTrue()
+                () -> assertThat(response.body).contains(bookId),
+                () -> assertThat(response.body).contains("updated")
         );
     }
 
@@ -128,8 +128,8 @@ public class BooksIntegrationTest {
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(AUTHOR)).isTrue(),
-                () -> assertThat(response.body.contains(NEW_TITLE)).isTrue()
+                () -> assertThat(response.body).contains(AUTHOR),
+                () -> assertThat(response.body).contains(NEW_TITLE)
         );
     }
 
@@ -143,8 +143,8 @@ public class BooksIntegrationTest {
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(response.body.contains(bookId)).isTrue(),
-                () -> assertThat(response.body.contains("deleted")).isTrue()
+                () -> assertThat(response.body).contains(bookId),
+                () -> assertThat(response.body).contains("deleted")
         );
     }
 
