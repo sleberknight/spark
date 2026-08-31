@@ -142,19 +142,15 @@ public class SocketConnectorFactoryTest {
 
     // _host/_port/_server/_factories are declared on AbstractConnector, a superclass of
     // ServerConnector, so KiwiReflection's own field lookup (which only looks at the target's
-    // exact runtime class) can't find them; walk the hierarchy ourselves instead.
+    // exact runtime class) can't find them; nonStaticFieldsInHierarchy() walks the hierarchy
+    // for us, though it doesn't set accessibility, so that's still on us.
     private static Field declaredField(Class<?> type, String fieldName) throws NoSuchFieldException {
-        Class<?> current = type;
-        while (current != null) {
-            try {
-                Field field = current.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                return field;
-            } catch (NoSuchFieldException e) {
-                current = current.getSuperclass();
-            }
-        }
-        throw new NoSuchFieldException(fieldName);
+        Field field = KiwiReflection.nonStaticFieldsInHierarchy(type).stream()
+                .filter(f -> f.getName().equals(fieldName))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchFieldException(fieldName));
+        field.setAccessible(true);
+        return field;
     }
 
 }
