@@ -75,13 +75,15 @@ public class BooksIntegrationTest {
         bookId = createBookViaPOST().body.trim();
 
         UrlResponse response = doMethod("GET", "/books", null);
-
-        assertThat(response).isNotNull();
         String body = response.body.trim();
-        assertThat(body).isNotNull();
-        assertThat(Integer.valueOf(body) > 0).isTrue();
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains(bookId)).isTrue();
+
+        assertAll(
+                () -> assertThat(response).isNotNull(),
+                () -> assertThat(body).isNotNull(),
+                () -> assertThat(Integer.valueOf(body) > 0).isTrue(),
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains(bookId)).isTrue()
+        );
     }
 
     @Test

@@ -112,8 +112,10 @@ public class SocketConnectorFactoryTest {
         String internalHost = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_host"), String.class);
         int internalPort = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"), Integer.class);
 
-        assertThat(internalHost).as("Server Connector Host should be set to the specified server").isEqualTo(host);
-        assertThat(internalPort).as("Server Connector Port should be set to the specified port").isEqualTo(port);
+        assertAll(
+                () -> assertThat(internalHost).as("Server Connector Host should be set to the specified server").isEqualTo(host),
+                () -> assertThat(internalPort).as("Server Connector Port should be set to the specified port").isEqualTo(port)
+        );
 
         @SuppressWarnings("unchecked")
         Map<String, ConnectionFactory> factories = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_factories"), Map.class);
@@ -123,9 +125,10 @@ public class SocketConnectorFactoryTest {
         SslConnectionFactory sslConnectionFactory = (SslConnectionFactory) factories.get("ssl");
         SslContextFactory sslContextFactory = sslConnectionFactory.getSslContextFactory();
 
-        assertThat(sslContextFactory.getKeyStoreResource().getFileName()).as("Should return the Keystore file specified").isEqualTo(keystoreFileName);
-
-        assertThat(sslContextFactory.getTrustStoreResource().getFileName()).as("Should return the Truststore file specified").isEqualTo(truststoreFileName);
+        assertAll(
+                () -> assertThat(sslContextFactory.getKeyStoreResource().getFileName()).as("Should return the Keystore file specified").isEqualTo(keystoreFileName),
+                () -> assertThat(sslContextFactory.getTrustStoreResource().getFileName()).as("Should return the Truststore file specified").isEqualTo(truststoreFileName)
+        );
 
     }
 

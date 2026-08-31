@@ -2,6 +2,7 @@ package spark;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import spark.util.SparkTestUtil;
 
@@ -20,23 +21,27 @@ public class UnmapTest {
         awaitInitialization();
 
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("tobeunmapped");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("tobeunmapped")
+        );
 
         unmap("/tobeunmapped");
 
-        response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        assertThat(response.status).isEqualTo(404);
+        SparkTestUtil.UrlResponse afterUnmap = testUtil.doMethod("GET", "/tobeunmapped", null);
+        assertThat(afterUnmap.status).isEqualTo(404);
 
         get("/tobeunmapped", (q, a) -> "tobeunmapped");
 
-        response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("tobeunmapped");
+        SparkTestUtil.UrlResponse afterRemap = testUtil.doMethod("GET", "/tobeunmapped", null);
+        assertAll(
+                () -> assertThat(afterRemap.status).isEqualTo(200),
+                () -> assertThat(afterRemap.body).isEqualTo("tobeunmapped")
+        );
 
         unmap("/tobeunmapped", "get");
 
-        response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        assertThat(response.status).isEqualTo(404);
+        SparkTestUtil.UrlResponse afterUnmapByMethod = testUtil.doMethod("GET", "/tobeunmapped", null);
+        assertThat(afterUnmapByMethod.status).isEqualTo(404);
     }
 }

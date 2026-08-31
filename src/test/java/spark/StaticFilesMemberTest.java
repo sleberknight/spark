@@ -98,8 +98,10 @@ public class StaticFilesMemberTest {
     @Test
     public void testStaticFileCssStyleCss() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/css/style.css", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Content of css file");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Content of css file")
+        );
 
         testGet();
     }
@@ -118,8 +120,10 @@ public class StaticFilesMemberTest {
     @Test
     public void testStaticFilePagesIndexHtml() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/pages/index.html", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("<html><body>Hello Static World!</body></html>");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("<html><body>Hello Static World!</body></html>")
+        );
 
         testGet();
     }
@@ -127,8 +131,10 @@ public class StaticFilesMemberTest {
     @Test
     public void testStaticFilePageHtml() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/page.html", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("<html><body>Hello Static Files World!</body></html>");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("<html><body>Hello Static Files World!</body></html>")
+        );
 
         testGet();
     }
@@ -136,8 +142,10 @@ public class StaticFilesMemberTest {
     @Test
     public void testExternalStaticFile() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/externalFile.html", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Content of external file");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Content of external file")
+        );
 
         testGet();
     }
@@ -151,8 +159,10 @@ public class StaticFilesMemberTest {
             }
         });
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/pages/index.html", null);
-        assertThat(response.headers.get("Server")).isEqualTo("Microsoft Word");
-        assertThat(response.headers.get("Cache-Control")).isEqualTo("private, max-age=600");
+        assertAll(
+                () -> assertThat(response.headers.get("Server")).isEqualTo("Microsoft Word"),
+                () -> assertThat(response.headers.get("Cache-Control")).isEqualTo("private, max-age=600")
+        );
 
         testGet();
     }

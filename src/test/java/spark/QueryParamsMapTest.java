@@ -76,17 +76,19 @@ public class QueryParamsMapTest {
     
     @Test
     public void parseKeyShouldParseSubkeys() {
-        String[] parsed = null;
-        
-        parsed = queryMap.parseKey("[name][more]");
-        
-        assertThat(parsed[0]).isEqualTo("name");
-        assertThat(parsed[1]).isEqualTo("[more]");
-        
-        parsed = queryMap.parseKey("[more]");
-        
-        assertThat(parsed[0]).isEqualTo("more");
-        assertThat(parsed[1]).isEqualTo("");
+        String[] parsedNameMore = queryMap.parseKey("[name][more]");
+
+        assertAll(
+                () -> assertThat(parsedNameMore[0]).isEqualTo("name"),
+                () -> assertThat(parsedNameMore[1]).isEqualTo("[more]")
+        );
+
+        String[] parsedMore = queryMap.parseKey("[more]");
+
+        assertAll(
+                () -> assertThat(parsedMore[0]).isEqualTo("more"),
+                () -> assertThat(parsedMore[1]).isEqualTo("")
+        );
     }
     
     @Test
