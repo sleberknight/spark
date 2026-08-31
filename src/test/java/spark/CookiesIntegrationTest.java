@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * System tests for the Cookies support.
@@ -134,10 +134,10 @@ public class CookiesIntegrationTest {
     private void httpPost(String relativePath) {
         HttpPost request = new HttpPost(DEFAULT_HOST_URL + relativePath);
         try {
-            HttpResponse response = httpClient.execute(request);
-            assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
-        } catch (Exception ex) {
-            fail(ex.toString());
+            assertThatCode(() -> {
+                HttpResponse response = httpClient.execute(request);
+                assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
+            }).doesNotThrowAnyException();
         } finally {
             request.releaseConnection();
         }
