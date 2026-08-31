@@ -35,7 +35,9 @@ public class ResourceUtilsTest {
         File file = ResourceUtils.getFile(url, "Some description");
 
         //then
-        assertThat(new File(ResourceUtils.toURI(url).getSchemeSpecificPart())).describedAs("Should be equals because URL protocol is file").isEqualTo(file);
+        assertThat(new File(ResourceUtils.toURI(url).getSchemeSpecificPart()))
+                .describedAs("Should be equals because URL protocol is file")
+                .isEqualTo(file);
     }
 
 }

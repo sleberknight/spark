@@ -21,9 +21,15 @@ public class JettyServerTest {
         int idleTimeout = KiwiReflection.getTypedFieldValue(threadPool, "_idleTimeout", Integer.class);
 
         assertAll(
-                () -> assertThat(minThreads).describedAs("Server thread pool default minThreads should be 8").isEqualTo(8),
-                () -> assertThat(maxThreads).describedAs("Server thread pool default maxThreads should be 200").isEqualTo(200),
-                () -> assertThat(idleTimeout).describedAs("Server thread pool default idleTimeout should be 60000").isEqualTo(60000)
+                () -> assertThat(minThreads)
+                        .describedAs("Server thread pool default minThreads should be 8")
+                        .isEqualTo(8),
+                () -> assertThat(maxThreads)
+                        .describedAs("Server thread pool default maxThreads should be 200")
+                        .isEqualTo(200),
+                () -> assertThat(idleTimeout)
+                        .describedAs("Server thread pool default idleTimeout should be 60000")
+                        .isEqualTo(60000)
         );
     }
 
@@ -38,9 +44,15 @@ public class JettyServerTest {
         int idleTimeout = KiwiReflection.getTypedFieldValue(threadPool, "_idleTimeout", Integer.class);
 
         assertAll(
-                () -> assertThat(minThreads).describedAs("Server thread pool default minThreads should be 8").isEqualTo(8),
-                () -> assertThat(maxThreads).describedAs("Server thread pool default maxThreads should be the same as specified").isEqualTo(9),
-                () -> assertThat(idleTimeout).describedAs("Server thread pool default idleTimeout should be 60000").isEqualTo(60000)
+                () -> assertThat(minThreads)
+                        .describedAs("Server thread pool default minThreads should be 8")
+                        .isEqualTo(8),
+                () -> assertThat(maxThreads)
+                        .describedAs("Server thread pool default maxThreads should be the same as specified")
+                        .isEqualTo(9),
+                () -> assertThat(idleTimeout)
+                        .describedAs("Server thread pool default idleTimeout should be 60000")
+                        .isEqualTo(60000)
         );
 
     }

@@ -56,7 +56,9 @@ public class UriPathTest {
         };
 
         for (String[] aCanonical : canonical) {
-            assertThat(UriPath.canonical(aCanonical[0])).describedAs("canonical " + aCanonical[0]).isEqualTo(aCanonical[1]);
+            assertThat(UriPath.canonical(aCanonical[0]))
+                    .describedAs("canonical " + aCanonical[0])
+                    .isEqualTo(aCanonical[1]);
         }
     }
 
