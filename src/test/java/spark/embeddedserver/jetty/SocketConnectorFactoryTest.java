@@ -14,19 +14,16 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class SocketConnectorFactoryTest {
 
     @Test
     public void testCreateSocketConnector_whenServerIsNull_thenThrowException() {
 
-        try {
-            SocketConnectorFactory.createSocketConnector(null, "host", 80, true);
-            fail("SocketConnector creation should have thrown an IllegalArgumentException");
-        } catch(IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("'server' must not be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> SocketConnectorFactory.createSocketConnector(null, "host", 80, true))
+                .withMessage("'server' must not be null");
     }
 
 
@@ -35,12 +32,9 @@ public class SocketConnectorFactoryTest {
 
         Server server = new Server();
 
-        try {
-            SocketConnectorFactory.createSocketConnector(server, null, 80, true);
-            fail("SocketConnector creation should have thrown an IllegalArgumentException");
-        } catch(IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("'host' must not be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> SocketConnectorFactory.createSocketConnector(server, null, 80, true))
+                .withMessage("'host' must not be null");
     }
 
     @Test
@@ -64,12 +58,9 @@ public class SocketConnectorFactoryTest {
     @Test
     public void testCreateSecureSocketConnector_whenServerIsNull() {
 
-        try {
-            SocketConnectorFactory.createSecureSocketConnector(null, "localhost", 80, (SslStores) null, true);
-            fail("SocketConnector creation should have thrown an IllegalArgumentException");
-        } catch(IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("'server' must not be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> SocketConnectorFactory.createSecureSocketConnector(null, "localhost", 80, (SslStores) null, true))
+                .withMessage("'server' must not be null");
     }
 
     @Test
@@ -77,12 +68,9 @@ public class SocketConnectorFactoryTest {
 
         Server server = new Server();
 
-        try {
-            SocketConnectorFactory.createSecureSocketConnector(server, null, 80, (SslStores) null, true);
-            fail("SocketConnector creation should have thrown an IllegalArgumentException");
-        } catch(IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("'host' must not be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> SocketConnectorFactory.createSecureSocketConnector(server, null, 80, (SslStores) null, true))
+                .withMessage("'host' must not be null");
     }
 
     @Test
@@ -90,12 +78,9 @@ public class SocketConnectorFactoryTest {
 
         Server server = new Server();
 
-        try {
-            SocketConnectorFactory.createSecureSocketConnector(server, "localhost", 80, (SslStores) null, true);
-            fail("SocketConnector creation should have thrown an IllegalArgumentException");
-        } catch(IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("'sslStores' must not be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> SocketConnectorFactory.createSecureSocketConnector(server, "localhost", 80, (SslStores) null, true))
+                .withMessage("'sslStores' must not be null");
     }
 
 

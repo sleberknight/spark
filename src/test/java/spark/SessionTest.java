@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.mockito.Mockito.*;
 
 public class SessionTest {
@@ -31,29 +31,17 @@ public class SessionTest {
     @Test
     public void testSession_whenHttpSessionIsNull_thenThrowException() {
 
-        try {
-
-            new Session(null, request);
-            fail("Session instantiation with a null HttpSession should throw an IllegalArgumentException");
-
-        } catch (IllegalArgumentException ex) {
-
-            assertThat(ex.getMessage()).isEqualTo("session cannot be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Session(null, request))
+                .withMessage("session cannot be null");
     }
 
     @Test
     public void testSession_whenRequestIsNull_thenThrowException() {
 
-        try {
-
-            new Session(httpSession, null);
-            fail("Session instantiation with a null Request should throw an IllegalArgumentException");
-
-        } catch (IllegalArgumentException ex) {
-
-            assertThat(ex.getMessage()).isEqualTo("request cannot be null");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Session(httpSession, null))
+                .withMessage("request cannot be null");
     }
 
     @Test

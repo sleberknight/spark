@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.kiwiproject.reflect.KiwiReflection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class JettyServerTest {
     @Test
@@ -42,12 +42,8 @@ public class JettyServerTest {
 
     @Test
     public void testCreateServer_whenNonDefaultMaxThreads_isLessThanDefaultMinThreads() {
-        try {
-            new JettyServer().create(2, 0, 0);
-            fail("expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException expected) {
-            assertThat(expected.getMessage()).isEqualTo("max threads (2) less than min threads (8)");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new JettyServer().create(2, 0, 0))
+                .withMessage("max threads (2) less than min threads (8)");
     }
 }

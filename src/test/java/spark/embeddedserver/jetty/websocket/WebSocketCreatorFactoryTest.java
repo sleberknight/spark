@@ -4,7 +4,7 @@ import org.eclipse.jetty.ee11.websocket.server.JettyWebSocketCreator;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import spark.embeddedserver.jetty.websocket.WebSocketCreatorFactory.SparkWebSocketCreator;
 
@@ -30,12 +30,9 @@ public class WebSocketCreatorFactoryTest {
 
     @Test
     public void testCannotCreateInvalidHandlers() {
-        try {
-            WebSocketCreatorFactory.create(new WebSocketHandlerClassWrapper(InvalidHandler.class));
-            fail("Handler creation should have thrown an IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("WebSocket handler must be annotated as '@WebSocket'");
-        }
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> WebSocketCreatorFactory.create(new WebSocketHandlerClassWrapper(InvalidHandler.class)))
+                .withMessage("WebSocket handler must be annotated as '@WebSocket'");
     }
 
     @WebSocket
