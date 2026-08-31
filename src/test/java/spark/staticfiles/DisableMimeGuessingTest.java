@@ -25,6 +25,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -88,14 +89,16 @@ public class DisableMimeGuessingTest {
 
     @Test
     public void testMimeTypes() throws Exception {
-        assertThat(doGet("/pages/index.html").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/js/scripts.js").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/css/style.css").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/img/sparklogo.png").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/img/sparklogo.svg").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/img/sparklogoPng").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/img/sparklogoSvg").headers.get("Content-Type")).isNull();
-        assertThat(doGet("/externalFile.html").headers.get("Content-Type")).isNull();
+        assertAll(
+                () -> assertThat(doGet("/pages/index.html").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/js/scripts.js").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/css/style.css").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/img/sparklogo.png").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/img/sparklogo.svg").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/img/sparklogoPng").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/img/sparklogoSvg").headers.get("Content-Type")).isNull(),
+                () -> assertThat(doGet("/externalFile.html").headers.get("Content-Type")).isNull()
+        );
     }
 
     @Test

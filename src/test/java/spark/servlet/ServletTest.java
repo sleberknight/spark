@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -80,15 +81,19 @@ public class ServletTest {
     @Test
     public void testGetHi() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello World!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello World!")
+        );
     }
 
     @Test
     public void testHiHead() throws Exception {
         UrlResponse response = testUtil.doMethod("HEAD", SOMEPATH + "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("")
+        );
     }
 
     @Test
@@ -100,22 +105,28 @@ public class ServletTest {
     @Test
     public void testGetRoot() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello Root!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello Root!")
+        );
     }
 
     @Test
     public void testEchoParam1() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/shizzy", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("echo: shizzy");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("echo: shizzy")
+        );
     }
 
     @Test
     public void testEchoParam2() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/gunit", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("echo: gunit");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("echo: gunit")
+        );
     }
 
     @Test
@@ -133,28 +144,36 @@ public class ServletTest {
     @Test
     public void testPost() throws Exception {
         UrlResponse response = testUtil.doMethod("POST", SOMEPATH + "/poster", "Fo shizzy");
-        assertThat(response.status).isEqualTo(201);
-        assertThat(response.body.contains("Fo shizzy")).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(201),
+                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+        );
     }
 
     @Test
     public void testStaticResource() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/css/style.css", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains("Content of css file")).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains("Content of css file")).isTrue()
+        );
     }
 
     @Test
     public void testStaticWelcomeResource() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/pages/", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains("<html><body>Hello Static World!</body></html>")).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains("<html><body>Hello Static World!</body></html>")).isTrue()
+        );
     }
 
     @Test
     public void testExternalStaticFile() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", SOMEPATH + "/" + MyApp.EXTERNAL_FILE, null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Content of external file");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Content of external file")
+        );
     }
 }
