@@ -6,17 +6,26 @@ import org.junit.jupiter.api.Test;
 import spark.routematch.RouteMatch;
 import spark.util.SparkTestUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static spark.Spark.*;
+import static spark.Spark.after;
+import static spark.Spark.afterAfter;
+import static spark.Spark.before;
+import static spark.Spark.get;
+import static spark.Spark.awaitInitialization;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RequestTest {

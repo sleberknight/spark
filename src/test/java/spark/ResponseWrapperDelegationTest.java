@@ -3,14 +3,16 @@ package spark;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 import spark.util.SparkTestUtil;
 
 import spark.util.SparkTestUtil.UrlResponse;
 
 import java.io.IOException;
 
-import static spark.Spark.*;
+import static spark.Spark.after;
+import static spark.Spark.exception;
+import static spark.Spark.get;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ResponseWrapperDelegationTest {
