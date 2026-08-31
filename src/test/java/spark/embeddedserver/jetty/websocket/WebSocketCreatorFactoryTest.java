@@ -16,8 +16,8 @@ public class WebSocketCreatorFactoryTest {
         JettyWebSocketCreator creator =
                 WebSocketCreatorFactory.create(new WebSocketHandlerClassWrapper(AnnotatedHandler.class));
         assertAll(
-                () -> assertThat(creator instanceof SparkWebSocketCreator).isTrue(),
-                () -> assertThat(SparkWebSocketCreator.class.cast(creator).getHandler() instanceof AnnotatedHandler).isTrue()
+                () -> assertThat(creator).isInstanceOf(SparkWebSocketCreator.class),
+                () -> assertThat(SparkWebSocketCreator.class.cast(creator).getHandler()).isInstanceOf(AnnotatedHandler.class)
         );
     }
 
