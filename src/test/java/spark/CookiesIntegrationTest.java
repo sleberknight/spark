@@ -32,7 +32,7 @@ public class CookiesIntegrationTest {
             .build();
 
     @BeforeAll
-    public static void initRoutes() throws InterruptedException {
+    public static void beforeAll() throws InterruptedException {
         post("/assertNoCookies", (request, response) -> {
             if (!request.cookies().isEmpty()) {
                 halt(500);
@@ -91,7 +91,7 @@ public class CookiesIntegrationTest {
     }
 
     @AfterAll
-    public static void stopServer() {
+    public static void afterAll() {
         Spark.stop();
     }
 

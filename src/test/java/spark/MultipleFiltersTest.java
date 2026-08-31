@@ -22,7 +22,7 @@ public class MultipleFiltersTest {
     private static SparkTestUtil http;
 
     @BeforeAll
-    public static void setup() {
+    public static void beforeAll() {
         http = new SparkTestUtil(4567);
 
         before("/user", initializeCounter, incrementCounter, loadUser);
@@ -41,7 +41,7 @@ public class MultipleFiltersTest {
     }
 
     @AfterAll
-    public static void stopServer() {
+    public static void afterAll() {
         stop();
     }
 

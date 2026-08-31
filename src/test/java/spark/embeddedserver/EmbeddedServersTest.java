@@ -25,6 +25,11 @@ public class EmbeddedServersTest {
     @TempDir
     File temporaryFolder;
 
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
+    }
+
     @Test
     public void testAddAndCreate_whenCreate_createsCustomServer() throws Exception {
         // Create custom Server
@@ -69,11 +74,6 @@ public class EmbeddedServersTest {
         Spark.awaitInitialization();
 
         assertThat(requestLogFile.exists()).isTrue();
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
     }
 
 }

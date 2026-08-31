@@ -37,7 +37,7 @@ public class RequestTest {
     RouteMatch matchWithParams = new RouteMatch(null, "/users/:username", "/users/bob", "text/html", null);
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         http = new SparkTestUtil(4567);
 
         before(BEFORE_MATCHED_ROUTE, (q, a) -> {

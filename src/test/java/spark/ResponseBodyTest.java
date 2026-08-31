@@ -46,13 +46,8 @@ public class ResponseBodyTest {
 
     private static SparkTestUtil http;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-    }
-
     @BeforeAll
-    public static void setup() throws IOException {
+    public static void beforeAll() throws IOException {
         http = new SparkTestUtil(4567);
 
         get(HELLO, (q, a) -> HELLO_WORLD);
@@ -93,6 +88,11 @@ public class ResponseBodyTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
     }
 
     @Test

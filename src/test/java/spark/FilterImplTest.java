@@ -12,7 +12,7 @@ public class FilterImplTest {
     public FilterImpl filter;
 
     @BeforeEach
-    public void setup(){
+    public void setUp(){
         PATH_TEST = "/etc/test";
         ACCEPT_TYPE_TEST  = "test/*";
     }

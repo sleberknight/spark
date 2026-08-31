@@ -53,17 +53,8 @@ public class DisableMimeGuessingTest {
 
     private static File tmpExternalFile;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-        if (tmpExternalFile != null) {
-            LOGGER.debug("tearDown().deleting: " + tmpExternalFile);
-            tmpExternalFile.delete();
-        }
-    }
-
     @BeforeAll
-    public static void setup() throws IOException {
+    public static void beforeAll() throws IOException {
         testUtil = new SparkTestUtil(4567);
 
         tmpExternalFile = new File(System.getProperty("java.io.tmpdir"), EXTERNAL_FILE_NAME_HTML);
@@ -84,6 +75,15 @@ public class DisableMimeGuessingTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
+        if (tmpExternalFile != null) {
+            LOGGER.debug("tearDown().deleting: " + tmpExternalFile);
+            tmpExternalFile.delete();
+        }
     }
 
     @Test

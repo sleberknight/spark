@@ -29,17 +29,8 @@ public class BodyAvailabilityTest {
     private static String routeBody = null;
     private static String afterBody = null;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-
-        beforeBody = null;
-        routeBody = null;
-        afterBody = null;
-    }
-
     @BeforeAll
-    public static void setup() {
+    public static void beforeAll() {
         LOGGER.debug("setup()");
 
         testUtil = new SparkTestUtil(4567);
@@ -65,6 +56,15 @@ public class BodyAvailabilityTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
+
+        beforeBody = null;
+        routeBody = null;
+        afterBody = null;
     }
 
     @Test

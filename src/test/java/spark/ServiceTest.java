@@ -28,7 +28,7 @@ public class ServiceTest {
     private Service service;
 
     @BeforeEach
-    public void test() {
+    public void setUp() {
         service = ignite();
     }
 

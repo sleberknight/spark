@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ServletFlagTest {
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         KiwiReflection.setFieldValue(null, isRunningFromServletField(), new AtomicBoolean(false));
     }
 

@@ -60,19 +60,8 @@ public class StaticFilesTestExternal {
     private static File tmpExternalFile2;
     private static File folderOutsideStaticFiles;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-        if (tmpExternalFile1 != null) {
-            LOGGER.debug("tearDown(). Deleting tmp files");
-            tmpExternalFile1.delete();
-            tmpExternalFile2.delete();
-            folderOutsideStaticFiles.delete();
-        }
-    }
-
     @BeforeAll
-    public static void setup() throws IOException {
+    public static void beforeAll() throws IOException {
         testUtil = new SparkTestUtil(4567);
 
         String directoryRoot = System.getProperty("java.io.tmpdir") + "sparkish";
@@ -108,6 +97,17 @@ public class StaticFilesTestExternal {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
+        if (tmpExternalFile1 != null) {
+            LOGGER.debug("tearDown(). Deleting tmp files");
+            tmpExternalFile1.delete();
+            tmpExternalFile2.delete();
+            folderOutsideStaticFiles.delete();
+        }
     }
 
     @Test

@@ -35,14 +35,14 @@ import static spark.Spark.stop;
 public class GzipTest {
 
     @BeforeAll
-    public static void setup() {
+    public static void beforeAll() {
         GzipExample.addStaticFileLocation();
         GzipExample.addRoutes();
         awaitInitialization();
     }
 
     @AfterAll
-    public static void tearDown() {
+    public static void afterAll() {
         stop();
     }
 

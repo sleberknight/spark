@@ -40,7 +40,7 @@ public class StaticFilesFromArchiveTest {
     private static ClassLoader initialClassLoader;
 
     @BeforeAll
-    public static void setup() throws Exception {
+    public static void beforeAll() throws Exception {
         setupClassLoader();
         testUtil = new SparkTestUtil(4567);
 
@@ -57,7 +57,7 @@ public class StaticFilesFromArchiveTest {
     }
 
     @AfterAll
-    public static void resetClassLoader() {
+    public static void afterAll() {
         Thread.currentThread().setContextClassLoader(initialClassLoader);
     }
 

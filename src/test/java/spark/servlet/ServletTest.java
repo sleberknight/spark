@@ -27,17 +27,8 @@ public class ServletTest {
 
     private static SparkTestUtil testUtil;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-        if (MyApp.tmpExternalFile != null) {
-            LOGGER.debug("tearDown().deleting: " + MyApp.tmpExternalFile);
-            MyApp.tmpExternalFile.delete();
-        }
-    }
-
     @BeforeAll
-    public static void setup() throws InterruptedException {
+    public static void beforeAll() throws InterruptedException {
         testUtil = new SparkTestUtil(PORT);
 
         final Server server = new Server();
@@ -75,6 +66,15 @@ public class ServletTest {
         }).start();
 
         latch.await();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
+        if (MyApp.tmpExternalFile != null) {
+            LOGGER.debug("tearDown().deleting: " + MyApp.tmpExternalFile);
+            MyApp.tmpExternalFile.delete();
+        }
     }
 
     @Test

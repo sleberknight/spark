@@ -21,7 +21,7 @@ public class SessionTest {
     Session session;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
 
         httpSession = mock(HttpSession.class);
         request = mock(Request.class);

@@ -16,13 +16,8 @@ public class ResponseWrapperDelegationTest {
 
     static SparkTestUtil testUtil;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-    }
-
     @BeforeAll
-    public static void setup() throws IOException {
+    public static void beforeAll() throws IOException {
         testUtil = new SparkTestUtil(4567);
 
         get("/204", (q, a) -> {
@@ -53,6 +48,11 @@ public class ResponseWrapperDelegationTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
     }
 
     @Test

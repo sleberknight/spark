@@ -18,17 +18,17 @@ import static spark.Spark.stop;
 public class FilterTest {
     static SparkTestUtil testUtil;
 
-    @AfterAll
-    public static void tearDown() {
-        stop();
-    }
-
     @BeforeAll
-    public static void setup() throws IOException {
+    public static void beforeAll() throws IOException {
         testUtil = new SparkTestUtil(4567);
 
         before("/justfilter", (q, a) -> System.out.println("Filter matched"));
         awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        stop();
     }
 
     @Test

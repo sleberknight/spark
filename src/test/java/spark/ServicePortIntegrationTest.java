@@ -20,13 +20,18 @@ public class ServicePortIntegrationTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServicePortIntegrationTest.class);
 
     @BeforeAll
-    public static void setUpClass() throws Exception {
+    public static void beforeAll() throws Exception {
         service = ignite();
         service.port(0);
 
         service.get("/hi", (q, a) -> "Hello World!");
 
         service.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() throws Exception {
+        service.stop();
     }
 
     @Test
@@ -42,8 +47,4 @@ public class ServicePortIntegrationTest {
         assertThat(response.body).isEqualTo("Hello World!");
     }
 
-    @AfterAll
-    public static void tearDown() throws Exception {
-        service.stop();
-    }
 }

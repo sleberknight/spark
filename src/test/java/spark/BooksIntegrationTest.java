@@ -32,18 +32,8 @@ public class BooksIntegrationTest {
 
     private String bookId;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-    }
-
-    @AfterEach
-    public void clearBooks() {
-        Books.books.clear();
-    }
-
     @BeforeAll
-    public static void setup() {
+    public static void beforeAll() {
         before((request, response) -> {
             response.header("FOZ", "BAZ");
         });
@@ -55,6 +45,16 @@ public class BooksIntegrationTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        Books.books.clear();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
     }
 
     @Test

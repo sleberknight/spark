@@ -23,6 +23,13 @@ public class EmbeddedJettyFactoryTest {
 
     private EmbeddedServer embeddedServer;
 
+    @AfterEach
+    public void tearDown() {
+        if (embeddedServer != null) {
+            embeddedServer.extinguish();
+        }
+    }
+
     @Test
     public void create() throws Exception {
         final JettyServerFactory jettyServerFactory = mock(JettyServerFactory.class);
@@ -100,10 +107,4 @@ public class EmbeddedJettyFactoryTest {
         assertThat(((JettyHandler) server.getHandler()).getSessionCookieConfig().isHttpOnly()).isFalse();
     }
 
-    @AfterEach
-    public void tearDown() {
-        if (embeddedServer != null) {
-            embeddedServer.extinguish();
-        }
-    }
 }

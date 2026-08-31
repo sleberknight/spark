@@ -39,7 +39,7 @@ public class MultipleServicesTest {
     private static SparkTestUtil secondClient;
 
     @BeforeAll
-    public static void setup() throws Exception {
+    public static void beforeAll() throws Exception {
         firstClient = new SparkTestUtil(4567);
         secondClient = new SparkTestUtil(1234);
 
@@ -51,7 +51,7 @@ public class MultipleServicesTest {
     }
 
     @AfterAll
-    public static void tearDown() {
+    public static void afterAll() {
         first.stop();
         second.stop();
     }

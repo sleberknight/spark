@@ -20,7 +20,7 @@ public class ResponseTest {
     private ArgumentCaptor<Cookie> cookieArgumentCaptor;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         httpServletResponse = mock(HttpServletResponse.class);
         response = new Response(httpServletResponse);
         cookieArgumentCaptor = ArgumentCaptor.forClass(Cookie.class);

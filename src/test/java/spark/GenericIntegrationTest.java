@@ -57,16 +57,8 @@ public class GenericIntegrationTest {
     static SparkTestUtil testUtil;
     static File tmpExternalFile;
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-        if (tmpExternalFile != null) {
-            tmpExternalFile.delete();
-        }
-    }
-
     @BeforeAll
-    public static void setup() throws IOException {
+    public static void beforeAll() throws IOException {
         testUtil = new SparkTestUtil(4567);
 
         tmpExternalFile = new File(System.getProperty("java.io.tmpdir"), "externalFile.html");
@@ -214,6 +206,14 @@ public class GenericIntegrationTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
+        if (tmpExternalFile != null) {
+            tmpExternalFile.delete();
+        }
     }
 
     @Test

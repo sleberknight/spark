@@ -30,13 +30,8 @@ public class GenericSecureIntegrationTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericSecureIntegrationTest.class);
 
-    @AfterAll
-    public static void tearDown() {
-        Spark.stop();
-    }
-
     @BeforeAll
-    public static void setup() {
+    public static void beforeAll() {
         testUtil = new SparkTestUtil(4567);
 
         // note that the keystore stuff is retrieved from SparkTestUtil which
@@ -76,6 +71,11 @@ public class GenericSecureIntegrationTest {
         });
 
         Spark.awaitInitialization();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        Spark.stop();
     }
 
     @Test
