@@ -26,6 +26,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -113,11 +114,13 @@ public class StaticFilesTestExternal {
     @Test
     public void testExternalStaticFile() throws Exception {
         SparkTestUtil.UrlResponse response = doGet("/externalFile.html");
-        assertThat(response.status).isEqualTo(200);
-        // Jetty 12 echoes MimeTypes' assumed charset for text/html into the Content-Type
-        // header when none is set explicitly; Jetty 9 did not. Cosmetic, not a functional change.
-        assertThat(response.headers.get("Content-Type")).isEqualTo("text/html;charset=utf-8");
-        assertThat(response.body).isEqualTo(CONTENT_OF_EXTERNAL_FILE);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                // Jetty 12 echoes MimeTypes' assumed charset for text/html into the Content-Type
+                // header when none is set explicitly; Jetty 9 did not. Cosmetic, not a functional change.
+                () -> assertThat(response.headers.get("Content-Type")).isEqualTo("text/html;charset=utf-8"),
+                () -> assertThat(response.body).isEqualTo(CONTENT_OF_EXTERNAL_FILE)
+        );
 
         testGet();
     }
@@ -127,8 +130,10 @@ public class StaticFilesTestExternal {
         String path = "/" + URLEncoder.encode("..\\..\\spark\\", "UTF-8") + "Spark.class";
         SparkTestUtil.UrlResponse response = doGet(path);
 
-        assertThat(response.status).isEqualTo(404);
-        assertThat(response.body).isEqualTo(NOT_FOUND_BRO);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(404),
+                () -> assertThat(response.body).isEqualTo(NOT_FOUND_BRO)
+        );
 
         testGet();
     }
@@ -136,8 +141,10 @@ public class StaticFilesTestExternal {
     private static void testGet() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains(FO_SHIZZY)).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains(FO_SHIZZY)).isTrue()
+        );
     }
 
     private SparkTestUtil.UrlResponse doGet(String fileName) throws Exception {

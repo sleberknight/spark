@@ -121,9 +121,11 @@ public class StaticFilesTest {
     @Test
     public void testStaticFileCssStyleCss() throws Exception {
         SparkTestUtil.UrlResponse response = doGet("/css/style.css");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.headers.get("Content-Type")).isEqualTo("text/css");
-        assertThat(response.body).isEqualTo("Content of css file");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.headers.get("Content-Type")).isEqualTo("text/css"),
+                () -> assertThat(response.body).isEqualTo("Content of css file")
+        );
 
         testGet();
     }
@@ -131,8 +133,10 @@ public class StaticFilesTest {
     @Test
     public void testStaticFilePagesIndexHtml() throws Exception {
         SparkTestUtil.UrlResponse response = doGet("/pages/index.html");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("<html><body>Hello Static World!</body></html>");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("<html><body>Hello Static World!</body></html>")
+        );
 
         testGet();
     }
@@ -140,8 +144,10 @@ public class StaticFilesTest {
     @Test
     public void testStaticFilePageHtml() throws Exception {
         SparkTestUtil.UrlResponse response = doGet("/page.html");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("<html><body>Hello Static Files World!</body></html>");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("<html><body>Hello Static Files World!</body></html>")
+        );
 
         testGet();
     }
@@ -159,8 +165,10 @@ public class StaticFilesTest {
     @Test
     public void testExternalStaticFile() throws Exception {
         SparkTestUtil.UrlResponse response = doGet("/externalFile.html");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(CONTENT_OF_EXTERNAL_FILE);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(CONTENT_OF_EXTERNAL_FILE)
+        );
 
         testGet();
     }
