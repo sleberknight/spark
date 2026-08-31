@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.junit.jupiter.api.Test;
 import org.kiwiproject.reflect.KiwiReflection;
+import org.kiwiproject.reflect.RuntimeReflectionException;
 import spark.ssl.SslStores;
 
 import java.lang.reflect.Field;
@@ -43,7 +44,7 @@ public class SocketConnectorFactoryTest {
     }
 
     @Test
-    public void testCreateSocketConnector() throws NoSuchFieldException {
+    public void testCreateSocketConnector() {
 
         final String host = "localhost";
         final int port = 8888;
@@ -99,7 +100,7 @@ public class SocketConnectorFactoryTest {
 
 
     @Test
-    public void testCreateSecureSocketConnector() throws  Exception {
+    public void testCreateSecureSocketConnector() {
 
         final String host = "localhost";
         final int port = 8888;
@@ -144,11 +145,13 @@ public class SocketConnectorFactoryTest {
     // ServerConnector, so KiwiReflection's own field lookup (which only looks at the target's
     // exact runtime class) can't find them; nonStaticFieldsInHierarchy() walks the hierarchy
     // for us, though it doesn't set accessibility, so that's still on us.
-    private static Field declaredField(Class<?> type, String fieldName) throws NoSuchFieldException {
+    private static Field declaredField(Class<?> type, String fieldName) {
         Field field = KiwiReflection.nonStaticFieldsInHierarchy(type).stream()
                 .filter(f -> f.getName().equals(fieldName))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchFieldException(fieldName));
+                .orElseThrow(() -> new RuntimeReflectionException(
+                        "Cannot find field [%s] in hierarchy of %s".formatted(fieldName, type),
+                        new NoSuchFieldException(fieldName)));
         field.setAccessible(true);
         return field;
     }
