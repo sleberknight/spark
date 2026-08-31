@@ -75,12 +75,11 @@ public class BooksIntegrationTest {
         bookId = createBookViaPOST().body.trim();
 
         UrlResponse response = doMethod("GET", "/books", null);
-        String body = response.body.trim();
 
         assertAll(
                 () -> assertThat(response).isNotNull(),
-                () -> assertThat(body).isNotNull(),
-                () -> assertThat(Integer.valueOf(body) > 0).isTrue(),
+                () -> assertThat(response.body).isNotNull(),
+                () -> assertThat(Integer.valueOf(response.body.trim()) > 0).isTrue(),
                 () -> assertThat(response.status).isEqualTo(200),
                 () -> assertThat(response.body.contains(bookId)).isTrue()
         );
@@ -92,13 +91,12 @@ public class BooksIntegrationTest {
 
         UrlResponse response = doMethod("GET", "/books/" + bookId, null);
 
-        String result = response.body;
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(result.contains(AUTHOR)).isTrue(),
-                () -> assertThat(result.contains(TITLE)).isTrue(),
+                () -> assertThat(response.body.contains(AUTHOR)).isTrue(),
+                () -> assertThat(response.body.contains(TITLE)).isTrue(),
                 () -> assertThat(beforeFilterIsSet(response)).isTrue(),
                 () -> assertThat(afterFilterIsSet(response)).isTrue()
         );
@@ -110,13 +108,12 @@ public class BooksIntegrationTest {
 
         UrlResponse response = updateBook();
 
-        String result = response.body;
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(result.contains(bookId)).isTrue(),
-                () -> assertThat(result.contains("updated")).isTrue()
+                () -> assertThat(response.body.contains(bookId)).isTrue(),
+                () -> assertThat(response.body.contains("updated")).isTrue()
         );
     }
 
@@ -127,13 +124,12 @@ public class BooksIntegrationTest {
 
         UrlResponse response = doMethod("GET", "/books/" + bookId, null);
 
-        String result = response.body;
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(result.contains(AUTHOR)).isTrue(),
-                () -> assertThat(result.contains(NEW_TITLE)).isTrue()
+                () -> assertThat(response.body.contains(AUTHOR)).isTrue(),
+                () -> assertThat(response.body.contains(NEW_TITLE)).isTrue()
         );
     }
 
@@ -143,13 +139,12 @@ public class BooksIntegrationTest {
 
         UrlResponse response = doMethod("DELETE", "/books/" + bookId, null);
 
-        String result = response.body;
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(response.body).isNotNull(),
                 () -> assertThat(response.status).isEqualTo(200),
-                () -> assertThat(result.contains(bookId)).isTrue(),
-                () -> assertThat(result.contains("deleted")).isTrue()
+                () -> assertThat(response.body.contains(bookId)).isTrue(),
+                () -> assertThat(response.body.contains("deleted")).isTrue()
         );
     }
 
