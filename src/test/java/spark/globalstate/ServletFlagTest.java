@@ -12,19 +12,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ServletFlagTest {
 
     @BeforeEach
-    public void setup() throws NoSuchFieldException {
+    public void setup() {
         KiwiReflection.setFieldValue(null, isRunningFromServletField(), new AtomicBoolean(false));
     }
 
     @Test
-    public void testRunFromServlet_whenDefault() throws Exception {
+    public void testRunFromServlet_whenDefault() {
 
         AtomicBoolean isRunningFromServlet = KiwiReflection.getTypedFieldValue(null, isRunningFromServletField(), AtomicBoolean.class);
         assertThat(isRunningFromServlet.get()).as("Should be false because it is the default value").isFalse();
     }
 
     @Test
-    public void testRunFromServlet_whenExecuted() throws Exception {
+    public void testRunFromServlet_whenExecuted() {
 
         ServletFlag.runFromServlet();
         AtomicBoolean isRunningFromServlet = KiwiReflection.getTypedFieldValue(null, isRunningFromServletField(), AtomicBoolean.class);
@@ -33,22 +33,20 @@ public class ServletFlagTest {
     }
 
     @Test
-    public void testIsRunningFromServlet_whenDefault() throws Exception {
+    public void testIsRunningFromServlet_whenDefault() {
 
         assertThat(ServletFlag.isRunningFromServlet()).as("Should be false because it is the default value").isFalse();
 
     }
 
     @Test
-    public void testIsRunningFromServlet_whenRunningFromServlet() throws Exception {
+    public void testIsRunningFromServlet_whenRunningFromServlet() {
 
         ServletFlag.runFromServlet();
         assertThat(ServletFlag.isRunningFromServlet()).as("Should be true because call to runFromServlet has been made").isTrue();
     }
 
-    private static Field isRunningFromServletField() throws NoSuchFieldException {
-        Field field = ServletFlag.class.getDeclaredField("isRunningFromServlet");
-        field.setAccessible(true);
-        return field;
+    private static Field isRunningFromServletField() {
+        return KiwiReflection.findField(new ServletFlag(), "isRunningFromServlet");
     }
 }
