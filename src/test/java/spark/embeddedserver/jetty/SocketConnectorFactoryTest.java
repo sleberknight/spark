@@ -51,9 +51,9 @@ public class SocketConnectorFactoryTest {
         Server server = new Server();
         ServerConnector serverConnector = SocketConnectorFactory.createSocketConnector(server, "localhost", 8888, true);
 
-        String internalHost = (String) KiwiReflection.getFieldValue(serverConnector, declaredField(ServerConnector.class, "_host"));
-        int internalPort = (int) KiwiReflection.getFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"));
-        Server internalServerConnector = (Server) KiwiReflection.getFieldValue(serverConnector, declaredField(ServerConnector.class, "_server"));
+        String internalHost = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_host"), String.class);
+        int internalPort = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"), Integer.class);
+        Server internalServerConnector = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_server"), Server.class);
 
         assertThat(internalHost).as("Server Connector Host should be set to the specified server").isEqualTo(host);
         assertThat(internalPort).as("Server Connector Port should be set to the specified port").isEqualTo(port);
@@ -120,14 +120,14 @@ public class SocketConnectorFactoryTest {
 
         ServerConnector serverConnector = SocketConnectorFactory.createSecureSocketConnector(server, host, port, sslStores, true);
 
-        String internalHost = (String) KiwiReflection.getFieldValue(serverConnector, declaredField(ServerConnector.class, "_host"));
-        int internalPort = (int) KiwiReflection.getFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"));
+        String internalHost = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_host"), String.class);
+        int internalPort = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"), Integer.class);
 
         assertThat(internalHost).as("Server Connector Host should be set to the specified server").isEqualTo(host);
         assertThat(internalPort).as("Server Connector Port should be set to the specified port").isEqualTo(port);
 
         @SuppressWarnings("unchecked")
-        Map<String, ConnectionFactory> factories = (Map<String, ConnectionFactory>) KiwiReflection.getFieldValue(serverConnector, declaredField(ServerConnector.class, "_factories"));
+        Map<String, ConnectionFactory> factories = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_factories"), Map.class);
 
         assertThat(factories.containsKey("ssl") && factories.get("ssl") != null).as("Should return true because factory for SSL should have been set").isTrue();
 

@@ -88,7 +88,7 @@ public class StaticFilesFromArchiveTest {
         UrlResponse response = testUtil.doMethod("GET", "/css/style.css", null);
 
         String expectedContentType = response.headers.get("Content-Type");
-        assertThat("text/css").isEqualTo(expectedContentType);
+        assertThat(expectedContentType).isEqualTo("text/css");
 
         String body = response.body;
         assertThat(body).isEqualTo("Content of css file");

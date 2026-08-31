@@ -108,7 +108,7 @@ public class StaticFilesMemberTest {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/js/module.mjs", null);
 
         String expectedContentType = response.headers.get("Content-Type");
-        assertThat("application/javascript").isEqualTo(expectedContentType);
+        assertThat(expectedContentType).isEqualTo("application/javascript");
 
         String body = response.body;
         assertThat(body).isEqualTo("export default function () { console.log(\"Hello, I'm a .mjs file\"); }\n");

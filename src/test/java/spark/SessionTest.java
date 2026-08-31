@@ -59,7 +59,7 @@ public class SessionTest {
     @Test
     public void testSession() {
 
-        HttpSession internalSession = (HttpSession) KiwiReflection.getFieldValue(session, "session");
+        HttpSession internalSession = KiwiReflection.getTypedFieldValue(session, "session", HttpSession.class);
         assertThat(internalSession).as("Internal session should be set to the http session provided during instantiation").isEqualTo(httpSession);
     }
 

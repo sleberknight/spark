@@ -78,7 +78,7 @@ public class ServiceTest {
     public void testIpAddress_whenInitializedFalse() {
         service.ipAddress(IP_ADDRESS);
 
-        String ipAddress = (String) KiwiReflection.getFieldValue(service, "ipAddress");
+        String ipAddress = KiwiReflection.getTypedFieldValue(service, "ipAddress", String.class);
         assertThat(ipAddress).as("IP address should be set to the IP address that was specified").isEqualTo(IP_ADDRESS);
     }
 
@@ -95,7 +95,7 @@ public class ServiceTest {
     public void testSetIpAddress_whenInitializedFalse() {
         service.ipAddress(IP_ADDRESS);
 
-        String ipAddress = (String) KiwiReflection.getFieldValue(service, "ipAddress");
+        String ipAddress = KiwiReflection.getTypedFieldValue(service, "ipAddress", String.class);
         assertThat(ipAddress).as("IP address should be set to the IP address that was specified").isEqualTo(IP_ADDRESS);
     }
 
@@ -112,7 +112,7 @@ public class ServiceTest {
     public void testPort_whenInitializedFalse() {
         service.port(8080);
 
-        int port = (int) KiwiReflection.getFieldValue(service, "port");
+        int port = KiwiReflection.getTypedFieldValue(service, "port", Integer.class);
         assertThat(port).as("Port should be set to the Port that was specified").isEqualTo(8080);
     }
 
@@ -129,7 +129,7 @@ public class ServiceTest {
     public void testSetPort_whenInitializedFalse() {
         service.port(8080);
 
-        int port = (int) KiwiReflection.getFieldValue(service, "port");
+        int port = KiwiReflection.getTypedFieldValue(service, "port", Integer.class);
         assertThat(port).as("Port should be set to the Port that was specified").isEqualTo(8080);
     }
 
@@ -175,9 +175,9 @@ public class ServiceTest {
     @Test
     public void testThreadPool_whenOnlyMaxThreads() {
         service.threadPool(100);
-        int maxThreads = (int) KiwiReflection.getFieldValue(service, "maxThreads");
-        int minThreads = (int) KiwiReflection.getFieldValue(service, "minThreads");
-        int threadIdleTimeoutMillis = (int) KiwiReflection.getFieldValue(service, "threadIdleTimeoutMillis");
+        int maxThreads = KiwiReflection.getTypedFieldValue(service, "maxThreads", Integer.class);
+        int minThreads = KiwiReflection.getTypedFieldValue(service, "minThreads", Integer.class);
+        int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
         assertThat(maxThreads).as("Should return maxThreads specified").isEqualTo(100);
         assertThat(minThreads).as("Should return minThreads specified").isEqualTo(-1);
         assertThat(threadIdleTimeoutMillis).as("Should return threadIdleTimeoutMillis specified").isEqualTo(-1);
@@ -186,9 +186,9 @@ public class ServiceTest {
     @Test
     public void testThreadPool_whenMaxMinAndTimeoutParameters() {
         service.threadPool(100, 50, 75);
-        int maxThreads = (int) KiwiReflection.getFieldValue(service, "maxThreads");
-        int minThreads = (int) KiwiReflection.getFieldValue(service, "minThreads");
-        int threadIdleTimeoutMillis = (int) KiwiReflection.getFieldValue(service, "threadIdleTimeoutMillis");
+        int maxThreads = KiwiReflection.getTypedFieldValue(service, "maxThreads", Integer.class);
+        int minThreads = KiwiReflection.getTypedFieldValue(service, "minThreads", Integer.class);
+        int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
         assertThat(maxThreads).as("Should return maxThreads specified").isEqualTo(100);
         assertThat(minThreads).as("Should return minThreads specified").isEqualTo(50);
         assertThat(threadIdleTimeoutMillis).as("Should return threadIdleTimeoutMillis specified").isEqualTo(75);
@@ -206,7 +206,7 @@ public class ServiceTest {
     @Test
     public void testSecure_thenReturnNewSslStores() {
         service.secure("keyfile", "keypassword", "truststorefile", "truststorepassword");
-        SslStores sslStores = (SslStores) KiwiReflection.getFieldValue(service, "sslStores");
+        SslStores sslStores = KiwiReflection.getTypedFieldValue(service, "sslStores", SslStores.class);
         assertThat(sslStores).as("Should return a SslStores because we configured it to have one").isNotNull();
         assertThat(sslStores.keystoreFile()).as("Should return keystoreFile from SslStores").isEqualTo("keyfile");
         assertThat(sslStores.keystorePassword()).as("Should return keystorePassword from SslStores").isEqualTo("keypassword");

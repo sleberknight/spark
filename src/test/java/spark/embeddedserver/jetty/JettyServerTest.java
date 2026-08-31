@@ -15,9 +15,9 @@ public class JettyServerTest {
 
         QueuedThreadPool threadPool = (QueuedThreadPool) server.getThreadPool();
 
-        int minThreads = (int) KiwiReflection.getFieldValue(threadPool, "_minThreads");
-        int maxThreads = (int) KiwiReflection.getFieldValue(threadPool, "_maxThreads");
-        int idleTimeout = (int) KiwiReflection.getFieldValue(threadPool, "_idleTimeout");
+        int minThreads = KiwiReflection.getTypedFieldValue(threadPool, "_minThreads", Integer.class);
+        int maxThreads = KiwiReflection.getTypedFieldValue(threadPool, "_maxThreads", Integer.class);
+        int idleTimeout = KiwiReflection.getTypedFieldValue(threadPool, "_idleTimeout", Integer.class);
 
         assertThat(minThreads).as("Server thread pool default minThreads should be 8").isEqualTo(8);
         assertThat(maxThreads).as("Server thread pool default maxThreads should be 200").isEqualTo(200);
@@ -30,9 +30,9 @@ public class JettyServerTest {
 
         QueuedThreadPool threadPool = (QueuedThreadPool) server.getThreadPool();
 
-        int minThreads = (int) KiwiReflection.getFieldValue(threadPool, "_minThreads");
-        int maxThreads = (int) KiwiReflection.getFieldValue(threadPool, "_maxThreads");
-        int idleTimeout = (int) KiwiReflection.getFieldValue(threadPool, "_idleTimeout");
+        int minThreads = KiwiReflection.getTypedFieldValue(threadPool, "_minThreads", Integer.class);
+        int maxThreads = KiwiReflection.getTypedFieldValue(threadPool, "_maxThreads", Integer.class);
+        int idleTimeout = KiwiReflection.getTypedFieldValue(threadPool, "_idleTimeout", Integer.class);
 
         assertThat(minThreads).as("Server thread pool default minThreads should be 8").isEqualTo(8);
         assertThat(maxThreads).as("Server thread pool default maxThreads should be the same as specified").isEqualTo(9);

@@ -28,7 +28,7 @@ public class ResponseTest {
 
     @Test
     public void testConstructor_whenHttpServletResponseParameter() {
-        HttpServletResponse returnResponse = (HttpServletResponse) KiwiReflection.getFieldValue(response, "response");
+        HttpServletResponse returnResponse = KiwiReflection.getTypedFieldValue(response, "response", HttpServletResponse.class);
         assertThat(returnResponse).as("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse").isSameAs(httpServletResponse);
     }
 
@@ -65,7 +65,7 @@ public class ResponseTest {
         final String finalBody = "Hello world!";
 
         response.body(finalBody);
-        String returnBody = (String) KiwiReflection.getFieldValue(response, "body");
+        String returnBody = KiwiReflection.getTypedFieldValue(response, "body", String.class);
         assertThat(returnBody).as("Should return body specified").isEqualTo(finalBody);
     }
 

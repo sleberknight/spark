@@ -99,19 +99,19 @@ public class MultipleServicesTest {
     @Test
     public void testGetAllRoutesFromBothServices(){
         for(RouteMatch routeMatch : first.routes()){
-            assertThat("*/*").isEqualTo(routeMatch.getAcceptType());
-            assertThat(HttpMethod.get).isEqualTo(routeMatch.getHttpMethod());
-            assertThat("/hello").isEqualTo(routeMatch.getMatchUri());
-            assertThat("ALL_ROUTES").isEqualTo(routeMatch.getRequestURI());
+            assertThat(routeMatch.getAcceptType()).isEqualTo("*/*");
+            assertThat(routeMatch.getHttpMethod()).isEqualTo(HttpMethod.get);
+            assertThat(routeMatch.getMatchUri()).isEqualTo("/hello");
+            assertThat(routeMatch.getRequestURI()).isEqualTo("ALL_ROUTES");
             assertThat(routeMatch.getTarget()).isInstanceOf(RouteImpl.class);
         }
 
         for(RouteMatch routeMatch : second.routes()){
-            assertThat("*/*").isEqualTo(routeMatch.getAcceptType());
+            assertThat(routeMatch.getAcceptType()).isEqualTo("*/*");
             assertThat(routeMatch.getHttpMethod()).isInstanceOf(HttpMethod.class);
             boolean isUriOnList = ("/hello/hi/uniqueforsecond").contains(routeMatch.getMatchUri());
             assertThat(isUriOnList).isTrue();
-            assertThat("ALL_ROUTES").isEqualTo(routeMatch.getRequestURI());
+            assertThat(routeMatch.getRequestURI()).isEqualTo("ALL_ROUTES");
             assertThat(routeMatch.getTarget()).isInstanceOf(RouteImpl.class);
         }
     }

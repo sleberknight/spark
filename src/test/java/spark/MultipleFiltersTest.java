@@ -29,11 +29,11 @@ public class MultipleFiltersTest {
 
         after("/user", incrementCounter, (req, res) -> {
             int counter = req.attribute("counter");
-            assertThat(2).isEqualTo(counter);
+            assertThat(counter).isEqualTo(2);
         });
 
         get("/user", (request, response) -> {
-            assertThat(1).isEqualTo((int) request.attribute("counter"));
+            assertThat((int) request.attribute("counter")).isEqualTo(1);
             return ((User) request.attribute("user")).name();
         });
 
