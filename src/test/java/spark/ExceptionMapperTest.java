@@ -11,7 +11,7 @@ public class ExceptionMapperTest {
 
 
     @Test
-    public void testGetInstance_whenDefaultInstanceIsNull() throws NoSuchFieldException {
+    public void testGetInstance_whenDefaultInstanceIsNull() {
         //given
         ExceptionMapper exceptionMapper = null;
         Field servletInstanceField = servletInstanceField();
@@ -23,7 +23,7 @@ public class ExceptionMapperTest {
     }
 
     @Test
-    public void testGetInstance_whenDefaultInstanceIsNotNull() throws NoSuchFieldException {
+    public void testGetInstance_whenDefaultInstanceIsNotNull() {
         //given
         ExceptionMapper.getServletInstance(); //initialize Singleton
 
@@ -32,9 +32,7 @@ public class ExceptionMapperTest {
         assertThat(exceptionMapper).as("Should be equals because ExceptionMapper is a singleton").isEqualTo(KiwiReflection.getTypedFieldValue(null, servletInstanceField(), ExceptionMapper.class));
     }
 
-    private static Field servletInstanceField() throws NoSuchFieldException {
-        Field field = ExceptionMapper.class.getDeclaredField("servletInstance");
-        field.setAccessible(true);
-        return field;
+    private static Field servletInstanceField() {
+        return KiwiReflection.findField(new ExceptionMapper(), "servletInstance");
     }
 }
