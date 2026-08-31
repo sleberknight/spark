@@ -52,10 +52,10 @@ public class QueryParamsMapTest {
         queryMap.loadKeys("user[age]",new String[] {"10"});
         queryMap.loadKeys("user[agrees]",new String[] {"true"});
 
-        assertThat(queryMap.get("user").get("age").integerValue()).isEqualTo(new Integer(10));
-        assertThat(queryMap.get("user").get("age").floatValue()).isEqualTo(new Float(10));
-        assertThat(queryMap.get("user").get("age").doubleValue()).isEqualTo(new Double(10));
-        assertThat(queryMap.get("user").get("age").longValue()).isEqualTo(new Long(10));
+        assertThat(queryMap.get("user").get("age").integerValue()).isEqualTo(10);
+        assertThat(queryMap.get("user").get("age").floatValue()).isEqualTo(10f);
+        assertThat(queryMap.get("user").get("age").doubleValue()).isEqualTo(10d);
+        assertThat(queryMap.get("user").get("age").longValue()).isEqualTo(10L);
         assertThat(queryMap.get("user").get("agrees").booleanValue()).isEqualTo(Boolean.TRUE);
     }
     
