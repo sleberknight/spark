@@ -1,9 +1,9 @@
 package spark;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import spark.util.SparkTestUtil;
 
@@ -11,6 +11,7 @@ import static spark.Spark.after;
 import static spark.Spark.awaitInitialization;
 import static spark.Spark.before;
 import static spark.Spark.get;
+
 import static spark.Spark.stop;
 
 /**
@@ -20,8 +21,7 @@ public class MultipleFiltersTest {
     
     private static SparkTestUtil http;
 
-
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         http = new SparkTestUtil(4567);
 
@@ -29,18 +29,18 @@ public class MultipleFiltersTest {
 
         after("/user", incrementCounter, (req, res) -> {
             int counter = req.attribute("counter");
-            Assert.assertEquals(counter, 2);
+            assertThat(2).isEqualTo(counter);
         });
 
         get("/user", (request, response) -> {
-            Assert.assertEquals((int) request.attribute("counter"), 1);
+            assertThat(1).isEqualTo((int) request.attribute("counter"));
             return ((User) request.attribute("user")).name();
         });
 
         awaitInitialization();
     }
 
-    @AfterClass
+    @AfterAll
     public static void stopServer() {
         stop();
     }
@@ -49,8 +49,8 @@ public class MultipleFiltersTest {
     public void testMultipleFilters() {
         try {
             SparkTestUtil.UrlResponse response = http.get("/user");
-            Assert.assertEquals(200, response.status);
-            Assert.assertEquals("Kevin", response.body);
+            assertThat(response.status).isEqualTo(200);
+            assertThat(response.body).isEqualTo("Kevin");
         } catch (Exception e) {
             e.printStackTrace();
         }

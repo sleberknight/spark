@@ -1,31 +1,40 @@
 package spark;
 
-import org.junit.Test;
-import org.powermock.reflect.Whitebox;
+import java.lang.reflect.Field;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.kiwiproject.reflect.KiwiReflection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExceptionMapperTest {
 
 
     @Test
-    public void testGetInstance_whenDefaultInstanceIsNull() {
+    public void testGetInstance_whenDefaultInstanceIsNull() throws NoSuchFieldException {
         //given
         ExceptionMapper exceptionMapper = null;
-        Whitebox.setInternalState(ExceptionMapper.class, "servletInstance", exceptionMapper);
+        Field servletInstanceField = servletInstanceField();
+        KiwiReflection.setFieldValue(null, servletInstanceField, exceptionMapper);
 
         //then
         exceptionMapper = ExceptionMapper.getServletInstance();
-        assertEquals("Should be equals because ExceptionMapper is a singleton", Whitebox.getInternalState(ExceptionMapper.class, "servletInstance"), exceptionMapper);
+        assertThat(exceptionMapper).as("Should be equals because ExceptionMapper is a singleton").isEqualTo(KiwiReflection.getFieldValue(null, servletInstanceField));
     }
 
     @Test
-    public void testGetInstance_whenDefaultInstanceIsNotNull() {
+    public void testGetInstance_whenDefaultInstanceIsNotNull() throws NoSuchFieldException {
         //given
         ExceptionMapper.getServletInstance(); //initialize Singleton
 
         //then
         ExceptionMapper exceptionMapper = ExceptionMapper.getServletInstance();
-        assertEquals("Should be equals because ExceptionMapper is a singleton", Whitebox.getInternalState(ExceptionMapper.class, "servletInstance"), exceptionMapper);
+        assertThat(exceptionMapper).as("Should be equals because ExceptionMapper is a singleton").isEqualTo(KiwiReflection.getFieldValue(null, servletInstanceField()));
+    }
+
+    private static Field servletInstanceField() throws NoSuchFieldException {
+        Field field = ExceptionMapper.class.getDeclaredField("servletInstance");
+        field.setAccessible(true);
+        return field;
     }
 }

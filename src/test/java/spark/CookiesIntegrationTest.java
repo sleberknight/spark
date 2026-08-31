@@ -1,7 +1,5 @@
 package spark;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static spark.Spark.*;
 
 import org.apache.http.HttpResponse;
@@ -10,9 +8,11 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * System tests for the Cookies support.
@@ -31,7 +31,7 @@ public class CookiesIntegrationTest {
             .setDefaultRequestConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD).build())
             .build();
 
-    @BeforeClass
+    @BeforeAll
     public static void initRoutes() throws InterruptedException {
         post("/assertNoCookies", (request, response) -> {
             if (!request.cookies().isEmpty()) {
@@ -90,7 +90,7 @@ public class CookiesIntegrationTest {
         Spark.awaitInitialization();
     }
 
-    @AfterClass
+    @AfterAll
     public static void stopServer() {
         Spark.stop();
     }
@@ -135,7 +135,7 @@ public class CookiesIntegrationTest {
         HttpPost request = new HttpPost(DEFAULT_HOST_URL + relativePath);
         try {
             HttpResponse response = httpClient.execute(request);
-            assertEquals(200, response.getStatusLine().getStatusCode());
+            assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
         } catch (Exception ex) {
             fail(ex.toString());
         } finally {

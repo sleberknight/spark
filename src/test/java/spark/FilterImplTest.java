@@ -1,9 +1,8 @@
 package spark;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FilterImplTest {
 
@@ -12,7 +11,7 @@ public class FilterImplTest {
 
     public FilterImpl filter;
 
-    @Before
+    @BeforeEach
     public void setup(){
         PATH_TEST = "/etc/test";
         ACCEPT_TYPE_TEST  = "test/*";
@@ -25,28 +24,28 @@ public class FilterImplTest {
             public void handle(Request request, Response response) throws Exception {
             }
         };
-        assertEquals("Should return path specified", PATH_TEST, filter.getPath());
-        assertEquals("Should return accept type specified", ACCEPT_TYPE_TEST, filter.getAcceptType());
+        assertThat(filter.getPath()).as("Should return path specified").isEqualTo(PATH_TEST);
+        assertThat(filter.getAcceptType()).as("Should return accept type specified").isEqualTo(ACCEPT_TYPE_TEST);
     }
 
     @Test
     public void testGets_thenReturnGetPathAndGetAcceptTypeSuccessfully() throws Exception {
         filter = FilterImpl.create(PATH_TEST, ACCEPT_TYPE_TEST, null);
-        assertEquals("Should return path specified", PATH_TEST, filter.getPath());
-        assertEquals("Should return accept type specified", ACCEPT_TYPE_TEST, filter.getAcceptType());
+        assertThat(filter.getPath()).as("Should return path specified").isEqualTo(PATH_TEST);
+        assertThat(filter.getAcceptType()).as("Should return accept type specified").isEqualTo(ACCEPT_TYPE_TEST);
     }
 
     @Test
     public void testCreate_whenOutAssignAcceptTypeInTheParameters_thenReturnPathAndAcceptTypeSuccessfully(){
         filter = FilterImpl.create(PATH_TEST, null);
-        assertEquals("Should return path specified", PATH_TEST, filter.getPath());
-        assertEquals("Should return accept type specified", RouteImpl.DEFAULT_ACCEPT_TYPE, filter.getAcceptType());
+        assertThat(filter.getPath()).as("Should return path specified").isEqualTo(PATH_TEST);
+        assertThat(filter.getAcceptType()).as("Should return accept type specified").isEqualTo(RouteImpl.DEFAULT_ACCEPT_TYPE);
     }
 
     @Test
     public void testCreate_whenAcceptTypeNullValueInTheParameters_thenReturnPathAndAcceptTypeSuccessfully(){
         filter = FilterImpl.create(PATH_TEST, null, null);
-        assertEquals("Should return path specified", PATH_TEST, filter.getPath());
-        assertEquals("Should return accept type specified", RouteImpl.DEFAULT_ACCEPT_TYPE, filter.getAcceptType());
+        assertThat(filter.getPath()).as("Should return path specified").isEqualTo(PATH_TEST);
+        assertThat(filter.getAcceptType()).as("Should return accept type specified").isEqualTo(RouteImpl.DEFAULT_ACCEPT_TYPE);
     }
 }

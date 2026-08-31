@@ -1,8 +1,7 @@
 package spark;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static spark.Spark.after;
 import static spark.Spark.before;
 
@@ -15,10 +14,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import spark.examples.books.Books;
 import spark.utils.IOUtils;
@@ -33,17 +32,17 @@ public class BooksIntegrationTest {
 
     private String bookId;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Spark.stop();
     }
 
-    @After
+    @AfterEach
     public void clearBooks() {
         Books.books.clear();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         before((request, response) -> {
             response.header("FOZ", "BAZ");
@@ -62,10 +61,10 @@ public class BooksIntegrationTest {
     public void canCreateBook() {
         UrlResponse response = createBookViaPOST();
 
-        assertNotNull(response);
-        assertNotNull(response.body);
-        assertTrue(Integer.valueOf(response.body) > 0);
-        assertEquals(201, response.status);
+        assertThat(response).isNotNull();
+        assertThat(response.body).isNotNull();
+        assertThat(Integer.valueOf(response.body) > 0).isTrue();
+        assertThat(response.status).isEqualTo(201);
     }
 
     @Test
@@ -74,12 +73,12 @@ public class BooksIntegrationTest {
 
         UrlResponse response = doMethod("GET", "/books", null);
 
-        assertNotNull(response);
+        assertThat(response).isNotNull();
         String body = response.body.trim();
-        assertNotNull(body);
-        assertTrue(Integer.valueOf(body) > 0);
-        assertEquals(200, response.status);
-        assertTrue(response.body.contains(bookId));
+        assertThat(body).isNotNull();
+        assertThat(Integer.valueOf(body) > 0).isTrue();
+        assertThat(response.status).isEqualTo(200);
+        assertThat(response.body.contains(bookId)).isTrue();
     }
 
     @Test
@@ -89,13 +88,13 @@ public class BooksIntegrationTest {
         UrlResponse response = doMethod("GET", "/books/" + bookId, null);
 
         String result = response.body;
-        assertNotNull(response);
-        assertNotNull(response.body);
-        assertEquals(200, response.status);
-        assertTrue(result.contains(AUTHOR));
-        assertTrue(result.contains(TITLE));
-        assertTrue(beforeFilterIsSet(response));
-        assertTrue(afterFilterIsSet(response));
+        assertThat(response).isNotNull();
+        assertThat(response.body).isNotNull();
+        assertThat(response.status).isEqualTo(200);
+        assertThat(result.contains(AUTHOR)).isTrue();
+        assertThat(result.contains(TITLE)).isTrue();
+        assertThat(beforeFilterIsSet(response)).isTrue();
+        assertThat(afterFilterIsSet(response)).isTrue();
     }
 
     @Test
@@ -105,11 +104,11 @@ public class BooksIntegrationTest {
         UrlResponse response = updateBook();
 
         String result = response.body;
-        assertNotNull(response);
-        assertNotNull(response.body);
-        assertEquals(200, response.status);
-        assertTrue(result.contains(bookId));
-        assertTrue(result.contains("updated"));
+        assertThat(response).isNotNull();
+        assertThat(response.body).isNotNull();
+        assertThat(response.status).isEqualTo(200);
+        assertThat(result.contains(bookId)).isTrue();
+        assertThat(result.contains("updated")).isTrue();
     }
 
     @Test
@@ -120,11 +119,11 @@ public class BooksIntegrationTest {
         UrlResponse response = doMethod("GET", "/books/" + bookId, null);
 
         String result = response.body;
-        assertNotNull(response);
-        assertNotNull(response.body);
-        assertEquals(200, response.status);
-        assertTrue(result.contains(AUTHOR));
-        assertTrue(result.contains(NEW_TITLE));
+        assertThat(response).isNotNull();
+        assertThat(response.body).isNotNull();
+        assertThat(response.status).isEqualTo(200);
+        assertThat(result.contains(AUTHOR)).isTrue();
+        assertThat(result.contains(NEW_TITLE)).isTrue();
     }
 
     @Test
@@ -134,16 +133,17 @@ public class BooksIntegrationTest {
         UrlResponse response = doMethod("DELETE", "/books/" + bookId, null);
 
         String result = response.body;
-        assertNotNull(response);
-        assertNotNull(response.body);
-        assertEquals(200, response.status);
-        assertTrue(result.contains(bookId));
-        assertTrue(result.contains("deleted"));
+        assertThat(response).isNotNull();
+        assertThat(response.body).isNotNull();
+        assertThat(response.status).isEqualTo(200);
+        assertThat(result.contains(bookId)).isTrue();
+        assertThat(result.contains("deleted")).isTrue();
     }
 
-    @Test(expected = FileNotFoundException.class)
-    public void wontFindBook() throws IOException {
-        getResponse("GET", "/books/" + bookId, null);
+    @Test
+    public void wontFindBook() {
+        assertThatThrownBy(() -> getResponse("GET", "/books/" + bookId, null))
+                .isInstanceOf(FileNotFoundException.class);
     }
 
     private static UrlResponse doMethod(String requestMethod, String path, String body) {

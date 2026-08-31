@@ -1,16 +1,15 @@
 package spark;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.kiwiproject.reflect.KiwiReflection;
 import org.mockito.ArgumentCaptor;
-import org.powermock.reflect.Whitebox;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class ResponseTest {
@@ -20,7 +19,7 @@ public class ResponseTest {
 
     private ArgumentCaptor<Cookie> cookieArgumentCaptor;
 
-    @Before
+    @BeforeEach
     public void setup() {
         httpServletResponse = mock(HttpServletResponse.class);
         response = new Response(httpServletResponse);
@@ -29,8 +28,8 @@ public class ResponseTest {
 
     @Test
     public void testConstructor_whenHttpServletResponseParameter() {
-        HttpServletResponse returnResponse = Whitebox.getInternalState(response, "response");
-        assertSame("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse", httpServletResponse, returnResponse);
+        HttpServletResponse returnResponse = (HttpServletResponse) KiwiReflection.getFieldValue(response, "response");
+        assertThat(returnResponse).as("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse").isSameAs(httpServletResponse);
     }
 
     @Test
@@ -66,23 +65,23 @@ public class ResponseTest {
         final String finalBody = "Hello world!";
 
         response.body(finalBody);
-        String returnBody = Whitebox.getInternalState(response, "body");
-        assertEquals("Should return body specified", finalBody, returnBody);
+        String returnBody = (String) KiwiReflection.getFieldValue(response, "body");
+        assertThat(returnBody).as("Should return body specified").isEqualTo(finalBody);
     }
 
     @Test
     public void testGetBody() {
         final String finalBody = "Hello world!";
 
-        Whitebox.setInternalState(response, "body", finalBody);
+        KiwiReflection.setFieldValue(response, "body", finalBody);
         String returnBody = response.body();
-        assertEquals("Should return body specified", finalBody, returnBody);
+        assertThat(returnBody).as("Should return body specified").isEqualTo(finalBody);
     }
 
     @Test
     public void testRaw() {
         HttpServletResponse returnResponse = response.raw();
-        assertSame("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse", httpServletResponse, returnResponse);
+        assertThat(returnResponse).as("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse").isSameAs(httpServletResponse);
     }
 
     @Test
@@ -128,12 +127,12 @@ public class ResponseTest {
                                        int maxAge,
                                        boolean secured,
                                        boolean httpOnly) {
-        assertEquals("Should return cookie domain specified", domain, cookie.getDomain());
-        assertEquals("Should return cookie path specified", path, cookie.getPath());
-        assertEquals("Should return cookie value specified", value, cookie.getValue());
-        assertEquals("Should return cookie max age specified", maxAge, cookie.getMaxAge());
-        assertEquals("Should return cookie secure specified", secured, cookie.getSecure());
-        assertEquals("Should return cookie http only specified", httpOnly, cookie.isHttpOnly());
+        assertThat(cookie.getDomain()).as("Should return cookie domain specified").isEqualTo(domain);
+        assertThat(cookie.getPath()).as("Should return cookie path specified").isEqualTo(path);
+        assertThat(cookie.getValue()).as("Should return cookie value specified").isEqualTo(value);
+        assertThat(cookie.getMaxAge()).as("Should return cookie max age specified").isEqualTo(maxAge);
+        assertThat(cookie.getSecure()).as("Should return cookie secure specified").isEqualTo(secured);
+        assertThat(cookie.isHttpOnly()).as("Should return cookie http only specified").isEqualTo(httpOnly);
     }
 
     @Test
@@ -264,8 +263,8 @@ public class ResponseTest {
         response.removeCookie(finalName);
         verify(httpServletResponse, times(2)).addCookie(cookieArgumentCaptor.capture());
 
-        assertEquals("Should return empty value for the given cookie name", "", cookieArgumentCaptor.getValue().getValue());
-        assertEquals("Should return an 0 for maximum cookie age", 0, cookieArgumentCaptor.getValue().getMaxAge());
+        assertThat(cookieArgumentCaptor.getValue().getValue()).as("Should return empty value for the given cookie name").isEqualTo("");
+        assertThat(cookieArgumentCaptor.getValue().getMaxAge()).as("Should return an 0 for maximum cookie age").isEqualTo(0);
     }
 
     @Test

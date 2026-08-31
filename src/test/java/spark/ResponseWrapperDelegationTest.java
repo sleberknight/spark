@@ -1,10 +1,11 @@
 package spark;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 import spark.util.SparkTestUtil;
+
 import spark.util.SparkTestUtil.UrlResponse;
 
 import java.io.IOException;
@@ -15,12 +16,12 @@ public class ResponseWrapperDelegationTest {
 
     static SparkTestUtil testUtil;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Spark.stop();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SparkTestUtil(4567);
 
@@ -57,17 +58,17 @@ public class ResponseWrapperDelegationTest {
     @Test
     public void filters_can_detect_response_status() throws Exception {
         UrlResponse response = testUtil.get("/204");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("ok", response.body);
+        assertThat(response.status).isEqualTo(200);
+        assertThat(response.body).isEqualTo("ok");
     }
 
     @Test
     public void filters_can_detect_content_type() throws Exception {
         UrlResponse response = testUtil.get("/json");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("{\"status\": \"ok\"}", response.body);
+        assertThat(response.status).isEqualTo(200);
+        assertThat(response.body).isEqualTo("{\"status\": \"ok\"}");
         // Jetty 12 echoes MimeTypes' assumed charset for text/plain into the Content-Type
         // header when none is set explicitly; Jetty 9 did not. Cosmetic, not a functional change.
-        Assert.assertEquals("text/plain;charset=iso-8859-1", response.headers.get("Content-Type"));
+        assertThat(response.headers.get("Content-Type")).isEqualTo("text/plain;charset=iso-8859-1");
     }
 }

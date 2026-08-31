@@ -18,14 +18,15 @@ package spark;
 
 import java.io.IOException;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import spark.util.SparkTestUtil;
 
-import static org.junit.Assert.assertEquals;
 import static spark.Spark.after;
+
 import static spark.Spark.get;
 
 /**
@@ -45,12 +46,12 @@ public class ResponseBodyTest {
 
     private static SparkTestUtil http;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Spark.stop();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         http = new SparkTestUtil(4567);
 
@@ -58,7 +59,7 @@ public class ResponseBodyTest {
 
         after(HELLO, (q, a) -> {
             String body = a.body();
-            assertEquals(HELLO_WORLD, body);
+            assertThat(body).isEqualTo(HELLO_WORLD);
         });
 
         get(SPECIAL, (q, a) -> {
@@ -68,7 +69,7 @@ public class ResponseBodyTest {
 
         after(SPECIAL, (q, a) -> {
             String body = a.body();
-            assertEquals(XIDXUS, body);
+            assertThat(body).isEqualTo(XIDXUS);
         });
 
         get(PORAKATIKAOKAO, (q, a) -> {
@@ -78,7 +79,7 @@ public class ResponseBodyTest {
 
         after(PORAKATIKAOKAO, (q, a) -> {
             String body = a.body();
-            assertEquals(GALLUS_SCANDALUM, body);
+            assertThat(body).isEqualTo(GALLUS_SCANDALUM);
         });
 
         get(MAXIME, (q, a) -> {
@@ -88,7 +89,7 @@ public class ResponseBodyTest {
 
         after(MAXIME, (q, a) -> {
             String body = a.body();
-            assertEquals($11AB, body);
+            assertThat(body).isEqualTo($11AB);
         });
 
         Spark.awaitInitialization();
@@ -98,8 +99,8 @@ public class ResponseBodyTest {
     public void testHELLO() {
         try {
             SparkTestUtil.UrlResponse response = http.get(HELLO);
-            assertEquals(200, response.status);
-            assertEquals(HELLO_WORLD, response.body);
+            assertThat(response.status).isEqualTo(200);
+            assertThat(response.body).isEqualTo(HELLO_WORLD);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
@@ -109,8 +110,8 @@ public class ResponseBodyTest {
     public void testSPECIAL() {
         try {
             SparkTestUtil.UrlResponse response = http.get(SPECIAL);
-            assertEquals(200, response.status);
-            assertEquals(XIDXUS, response.body);
+            assertThat(response.status).isEqualTo(200);
+            assertThat(response.body).isEqualTo(XIDXUS);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
@@ -120,8 +121,8 @@ public class ResponseBodyTest {
     public void testPORAKATIKAOKAO() {
         try {
             SparkTestUtil.UrlResponse response = http.get(PORAKATIKAOKAO);
-            assertEquals(200, response.status);
-            assertEquals(GALLUS_SCANDALUM, response.body);
+            assertThat(response.status).isEqualTo(200);
+            assertThat(response.body).isEqualTo(GALLUS_SCANDALUM);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
@@ -131,8 +132,8 @@ public class ResponseBodyTest {
     public void testMAXIME() {
         try {
             SparkTestUtil.UrlResponse response = http.get(MAXIME);
-            assertEquals(200, response.status);
-            assertEquals($11AB, response.body);
+            assertThat(response.status).isEqualTo(200);
+            assertThat(response.body).isEqualTo($11AB);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

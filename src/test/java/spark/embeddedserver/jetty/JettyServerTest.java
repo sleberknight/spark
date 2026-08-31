@@ -2,11 +2,11 @@ package spark.embeddedserver.jetty;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
-import org.junit.Test;
-import org.powermock.reflect.Whitebox;
+import org.junit.jupiter.api.Test;
+import org.kiwiproject.reflect.KiwiReflection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class JettyServerTest {
     @Test
@@ -15,13 +15,13 @@ public class JettyServerTest {
 
         QueuedThreadPool threadPool = (QueuedThreadPool) server.getThreadPool();
 
-        int minThreads = Whitebox.getInternalState(threadPool, "_minThreads");
-        int maxThreads = Whitebox.getInternalState(threadPool, "_maxThreads");
-        int idleTimeout = Whitebox.getInternalState(threadPool, "_idleTimeout");
+        int minThreads = (int) KiwiReflection.getFieldValue(threadPool, "_minThreads");
+        int maxThreads = (int) KiwiReflection.getFieldValue(threadPool, "_maxThreads");
+        int idleTimeout = (int) KiwiReflection.getFieldValue(threadPool, "_idleTimeout");
 
-        assertEquals("Server thread pool default minThreads should be 8", 8, minThreads);
-        assertEquals("Server thread pool default maxThreads should be 200", 200, maxThreads);
-        assertEquals("Server thread pool default idleTimeout should be 60000", 60000, idleTimeout);
+        assertThat(minThreads).as("Server thread pool default minThreads should be 8").isEqualTo(8);
+        assertThat(maxThreads).as("Server thread pool default maxThreads should be 200").isEqualTo(200);
+        assertThat(idleTimeout).as("Server thread pool default idleTimeout should be 60000").isEqualTo(60000);
     }
 
     @Test
@@ -30,13 +30,13 @@ public class JettyServerTest {
 
         QueuedThreadPool threadPool = (QueuedThreadPool) server.getThreadPool();
 
-        int minThreads = Whitebox.getInternalState(threadPool, "_minThreads");
-        int maxThreads = Whitebox.getInternalState(threadPool, "_maxThreads");
-        int idleTimeout = Whitebox.getInternalState(threadPool, "_idleTimeout");
+        int minThreads = (int) KiwiReflection.getFieldValue(threadPool, "_minThreads");
+        int maxThreads = (int) KiwiReflection.getFieldValue(threadPool, "_maxThreads");
+        int idleTimeout = (int) KiwiReflection.getFieldValue(threadPool, "_idleTimeout");
 
-        assertEquals("Server thread pool default minThreads should be 8", 8, minThreads);
-        assertEquals("Server thread pool default maxThreads should be the same as specified", 9, maxThreads);
-        assertEquals("Server thread pool default idleTimeout should be 60000", 60000, idleTimeout);
+        assertThat(minThreads).as("Server thread pool default minThreads should be 8").isEqualTo(8);
+        assertThat(maxThreads).as("Server thread pool default maxThreads should be the same as specified").isEqualTo(9);
+        assertThat(idleTimeout).as("Server thread pool default idleTimeout should be 60000").isEqualTo(60000);
 
     }
 
@@ -47,7 +47,7 @@ public class JettyServerTest {
             fail("expected IllegalArgumentException");
         }
         catch (IllegalArgumentException expected) {
-            assertEquals("max threads (2) less than min threads (8)", expected.getMessage());
+            assertThat(expected.getMessage()).isEqualTo("max threads (2) less than min threads (8)");
         }
     }
 }
