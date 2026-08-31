@@ -50,13 +50,13 @@ public class SessionTest {
     public void testSession() {
 
         HttpSession internalSession = KiwiReflection.getTypedFieldValue(session, "session", HttpSession.class);
-        assertThat(internalSession).as("Internal session should be set to the http session provided during instantiation").isEqualTo(httpSession);
+        assertThat(internalSession).describedAs("Internal session should be set to the http session provided during instantiation").isEqualTo(httpSession);
     }
 
     @Test
     public void testRaw() {
 
-        assertThat(session.raw()).as("Should return the HttpSession provided during instantiation").isEqualTo(httpSession);
+        assertThat(session.raw()).describedAs("Should return the HttpSession provided during instantiation").isEqualTo(httpSession);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class SessionTest {
 
         when(httpSession.getAttribute("name")).thenReturn("Jett");
 
-        assertThat((String) session.attribute("name")).as("Should return attribute from HttpSession").isEqualTo("Jett");
+        assertThat((String) session.attribute("name")).describedAs("Should return attribute from HttpSession").isEqualTo("Jett");
 
     }
 
@@ -83,7 +83,7 @@ public class SessionTest {
 
         when(httpSession.getAttributeNames()).thenReturn(Collections.enumeration(attributes));
 
-        assertThat(session.attributes()).as("Should return attributes from the HttpSession").isEqualTo(attributes);
+        assertThat(session.attributes()).describedAs("Should return attributes from the HttpSession").isEqualTo(attributes);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class SessionTest {
 
         when(httpSession.getCreationTime()).thenReturn(10000000l);
 
-        assertThat(session.creationTime()).as("Should return creationTime from HttpSession").isEqualTo(10000000l);
+        assertThat(session.creationTime()).describedAs("Should return creationTime from HttpSession").isEqualTo(10000000l);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SessionTest {
 
         when(httpSession.getId()).thenReturn("id");
 
-        assertThat(session.id()).as("Should return session id from HttpSession").isEqualTo("id");
+        assertThat(session.id()).describedAs("Should return session id from HttpSession").isEqualTo("id");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class SessionTest {
 
         when(httpSession.getLastAccessedTime()).thenReturn(20000000l);
 
-        assertThat(session.lastAccessedTime()).as("Should return lastAccessedTime from HttpSession").isEqualTo(20000000l);
+        assertThat(session.lastAccessedTime()).describedAs("Should return lastAccessedTime from HttpSession").isEqualTo(20000000l);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class SessionTest {
 
         when(httpSession.getMaxInactiveInterval()).thenReturn(100);
 
-        assertThat(session.maxInactiveInterval()).as("Should return maxInactiveInterval from HttpSession").isEqualTo(100);
+        assertThat(session.maxInactiveInterval()).describedAs("Should return maxInactiveInterval from HttpSession").isEqualTo(100);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class SessionTest {
 
         when(httpSession.isNew()).thenReturn(true);
 
-        assertThat(session.isNew()).as("Should return isNew status from HttpSession").isEqualTo(true);
+        assertThat(session.isNew()).describedAs("Should return isNew status from HttpSession").isEqualTo(true);
     }
 
     @Test

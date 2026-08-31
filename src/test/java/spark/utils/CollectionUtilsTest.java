@@ -13,7 +13,7 @@ public class CollectionUtilsTest {
 
         Collection<Object> testCollection = new ArrayList<>();
 
-        assertThat(CollectionUtils.isEmpty(testCollection)).as("Should return true because collection is empty").isTrue();
+        assertThat(CollectionUtils.isEmpty(testCollection)).describedAs("Should return true because collection is empty").isTrue();
 
     }
 
@@ -24,7 +24,7 @@ public class CollectionUtilsTest {
         testCollection.add(1);
         testCollection.add(2);
 
-        assertThat(CollectionUtils.isEmpty(testCollection)).as("Should return false because collection is not empty").isFalse();
+        assertThat(CollectionUtils.isEmpty(testCollection)).describedAs("Should return false because collection is not empty").isFalse();
 
     }
 
@@ -33,7 +33,7 @@ public class CollectionUtilsTest {
 
         Collection<Integer> testCollection = null;
 
-        assertThat(CollectionUtils.isEmpty(testCollection)).as("Should return true because collection is null").isTrue();
+        assertThat(CollectionUtils.isEmpty(testCollection)).describedAs("Should return true because collection is null").isTrue();
 
     }
 
@@ -42,7 +42,7 @@ public class CollectionUtilsTest {
 
         Collection<Object> testCollection = new ArrayList<>();
 
-        assertThat(CollectionUtils.isNotEmpty(testCollection)).as("Should return false because collection is empty").isFalse();
+        assertThat(CollectionUtils.isNotEmpty(testCollection)).describedAs("Should return false because collection is empty").isFalse();
 
     }
 
@@ -53,7 +53,7 @@ public class CollectionUtilsTest {
         testCollection.add(1);
         testCollection.add(2);
 
-        assertThat(CollectionUtils.isNotEmpty(testCollection)).as("Should return true because collection is not empty").isTrue();
+        assertThat(CollectionUtils.isNotEmpty(testCollection)).describedAs("Should return true because collection is not empty").isTrue();
 
     }
 
@@ -62,7 +62,7 @@ public class CollectionUtilsTest {
 
         Collection<Object> testCollection = null;
 
-        assertThat(CollectionUtils.isNotEmpty(testCollection)).as("Should return false because collection is null").isFalse();
+        assertThat(CollectionUtils.isNotEmpty(testCollection)).describedAs("Should return false because collection is null").isFalse();
 
     }
 }

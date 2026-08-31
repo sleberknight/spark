@@ -8,14 +8,14 @@ public class ObjectUtilsTest {
     @Test
     public void testIsEmpty_whenArrayIsEmpty() throws Exception {
 
-        assertThat(ObjectUtils.isEmpty(new Object[]{})).as("Should return false because array is empty").isTrue();
+        assertThat(ObjectUtils.isEmpty(new Object[]{})).describedAs("Should return false because array is empty").isTrue();
 
     }
 
     @Test
     public void testIsEmpty_whenArrayIsNotEmpty() throws Exception {
 
-        assertThat(ObjectUtils.isEmpty(new Integer[]{1,2})).as("Should return false because array is not empty").isFalse();
+        assertThat(ObjectUtils.isEmpty(new Integer[]{1,2})).describedAs("Should return false because array is not empty").isFalse();
 
     }
 }

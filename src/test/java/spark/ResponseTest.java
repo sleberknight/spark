@@ -32,7 +32,9 @@ public class ResponseTest {
     @Test
     public void testConstructor_whenHttpServletResponseParameter() {
         HttpServletResponse returnResponse = KiwiReflection.getTypedFieldValue(response, "response", HttpServletResponse.class);
-        assertThat(returnResponse).as("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse").isSameAs(httpServletResponse);
+        assertThat(returnResponse)
+                .describedAs("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse")
+                .isSameAs(httpServletResponse);
     }
 
     @Test
@@ -69,7 +71,7 @@ public class ResponseTest {
 
         response.body(finalBody);
         String returnBody = KiwiReflection.getTypedFieldValue(response, "body", String.class);
-        assertThat(returnBody).as("Should return body specified").isEqualTo(finalBody);
+        assertThat(returnBody).describedAs("Should return body specified").isEqualTo(finalBody);
     }
 
     @Test
@@ -78,13 +80,15 @@ public class ResponseTest {
 
         KiwiReflection.setFieldValue(response, "body", finalBody);
         String returnBody = response.body();
-        assertThat(returnBody).as("Should return body specified").isEqualTo(finalBody);
+        assertThat(returnBody).describedAs("Should return body specified").isEqualTo(finalBody);
     }
 
     @Test
     public void testRaw() {
         HttpServletResponse returnResponse = response.raw();
-        assertThat(returnResponse).as("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse").isSameAs(httpServletResponse);
+        assertThat(returnResponse)
+                .describedAs("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse")
+                .isSameAs(httpServletResponse);
     }
 
     @Test
@@ -131,12 +135,12 @@ public class ResponseTest {
                                        boolean secured,
                                        boolean httpOnly) {
         assertAll(
-                () -> assertThat(cookie.getDomain()).as("Should return cookie domain specified").isEqualTo(domain),
-                () -> assertThat(cookie.getPath()).as("Should return cookie path specified").isEqualTo(path),
-                () -> assertThat(cookie.getValue()).as("Should return cookie value specified").isEqualTo(value),
-                () -> assertThat(cookie.getMaxAge()).as("Should return cookie max age specified").isEqualTo(maxAge),
-                () -> assertThat(cookie.getSecure()).as("Should return cookie secure specified").isEqualTo(secured),
-                () -> assertThat(cookie.isHttpOnly()).as("Should return cookie http only specified").isEqualTo(httpOnly)
+                () -> assertThat(cookie.getDomain()).describedAs("Should return cookie domain specified").isEqualTo(domain),
+                () -> assertThat(cookie.getPath()).describedAs("Should return cookie path specified").isEqualTo(path),
+                () -> assertThat(cookie.getValue()).describedAs("Should return cookie value specified").isEqualTo(value),
+                () -> assertThat(cookie.getMaxAge()).describedAs("Should return cookie max age specified").isEqualTo(maxAge),
+                () -> assertThat(cookie.getSecure()).describedAs("Should return cookie secure specified").isEqualTo(secured),
+                () -> assertThat(cookie.isHttpOnly()).describedAs("Should return cookie http only specified").isEqualTo(httpOnly)
         );
     }
 
@@ -269,8 +273,12 @@ public class ResponseTest {
         verify(httpServletResponse, times(2)).addCookie(cookieArgumentCaptor.capture());
 
         assertAll(
-                () -> assertThat(cookieArgumentCaptor.getValue().getValue()).as("Should return empty value for the given cookie name").isEqualTo(""),
-                () -> assertThat(cookieArgumentCaptor.getValue().getMaxAge()).as("Should return an 0 for maximum cookie age").isEqualTo(0)
+                () -> assertThat(cookieArgumentCaptor.getValue().getValue())
+                        .describedAs("Should return empty value for the given cookie name")
+                        .isEmpty(),
+                () -> assertThat(cookieArgumentCaptor.getValue().getMaxAge())
+                        .describedAs("Should return an 0 for maximum cookie age")
+                        .isZero()
         );
     }
 

@@ -32,7 +32,7 @@ public class InputStreamSerializerTest {
 
         serializer.process(output, input);
 
-        assertThat(input.closed).as("Expected stream to be closed").isTrue();
+        assertThat(input.closed).describedAs("Expected stream to be closed").isTrue();
     }
 
     private class MockInputStream extends FilterInputStream {
