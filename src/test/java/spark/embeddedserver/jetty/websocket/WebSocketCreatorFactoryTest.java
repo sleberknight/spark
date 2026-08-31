@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import spark.embeddedserver.jetty.websocket.WebSocketCreatorFactory.SparkWebSocketCreator;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class WebSocketCreatorFactoryTest {
 
@@ -14,8 +15,10 @@ public class WebSocketCreatorFactoryTest {
     public void testCreateWebSocketHandler() {
         JettyWebSocketCreator creator =
                 WebSocketCreatorFactory.create(new WebSocketHandlerClassWrapper(AnnotatedHandler.class));
-        assertThat(creator instanceof SparkWebSocketCreator).isTrue();
-        assertThat(SparkWebSocketCreator.class.cast(creator).getHandler() instanceof AnnotatedHandler).isTrue();
+        assertAll(
+                () -> assertThat(creator instanceof SparkWebSocketCreator).isTrue(),
+                () -> assertThat(SparkWebSocketCreator.class.cast(creator).getHandler() instanceof AnnotatedHandler).isTrue()
+        );
     }
 
     @Test
@@ -24,8 +27,10 @@ public class WebSocketCreatorFactoryTest {
                 WebSocketCreatorFactory.create(new WebSocketHandlerClassWrapper(AnnotatedHandler.class));
         Object handler = SparkWebSocketCreator.class.cast(creator).getHandler();
 
-        assertThat(creator.createWebSocket(null, null)).isSameAs(handler);
-        assertThat(creator.createWebSocket(null, null)).isSameAs(handler);
+        assertAll(
+                () -> assertThat(creator.createWebSocket(null, null)).isSameAs(handler),
+                () -> assertThat(creator.createWebSocket(null, null)).isSameAs(handler)
+        );
     }
 
     @Test

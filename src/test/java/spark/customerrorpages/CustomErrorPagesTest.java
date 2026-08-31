@@ -15,6 +15,7 @@ import static spark.Spark.get;
 import static spark.Spark.internalServerError;
 
 import static spark.Spark.notFound;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class CustomErrorPagesTest {
 
@@ -57,30 +58,38 @@ public class CustomErrorPagesTest {
     @Test
     public void testGetHi() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(HELLO_WORLD);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(HELLO_WORLD)
+        );
     }
 
     @Test
     public void testCustomNotFound() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/othernotmapped", null);
-        assertThat(response.status).isEqualTo(404);
-        assertThat(response.body).isEqualTo(CUSTOM_NOT_FOUND);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(404),
+                () -> assertThat(response.body).isEqualTo(CUSTOM_NOT_FOUND)
+        );
     }
 
     @Test
     public void testCustomInternal() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/raiseinternal", null);
-        assertThat(response.status).isEqualTo(500);
-        assertThat(response.headers.get("Content-Type")).isEqualTo(APPLICATION_JSON);
-        assertThat(response.body).isEqualTo(CUSTOM_INTERNAL);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(500),
+                () -> assertThat(response.headers.get("Content-Type")).isEqualTo(APPLICATION_JSON),
+                () -> assertThat(response.body).isEqualTo(CUSTOM_INTERNAL)
+        );
     }
 
     @Test
     public void testCustomInternalFailingRoute() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/raiseinternal?" + QUERY_PARAM_KEY + "=sumthin", null);
-        assertThat(response.status).isEqualTo(500);
-        assertThat(response.body).isEqualTo(CustomErrorPages.INTERNAL_ERROR);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(500),
+                () -> assertThat(response.body).isEqualTo(CustomErrorPages.INTERNAL_ERROR)
+        );
     }
 
 }

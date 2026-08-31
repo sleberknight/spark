@@ -11,6 +11,7 @@ import spark.util.SparkTestUtil.UrlResponse;
 import java.io.IOException;
 
 import static spark.Spark.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ResponseWrapperDelegationTest {
 
@@ -58,17 +59,21 @@ public class ResponseWrapperDelegationTest {
     @Test
     public void filters_can_detect_response_status() throws Exception {
         UrlResponse response = testUtil.get("/204");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("ok");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("ok")
+        );
     }
 
     @Test
     public void filters_can_detect_content_type() throws Exception {
         UrlResponse response = testUtil.get("/json");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("{\"status\": \"ok\"}");
-        // Jetty 12 echoes MimeTypes' assumed charset for text/plain into the Content-Type
-        // header when none is set explicitly; Jetty 9 did not. Cosmetic, not a functional change.
-        assertThat(response.headers.get("Content-Type")).isEqualTo("text/plain;charset=iso-8859-1");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("{\"status\": \"ok\"}"),
+                // Jetty 12 echoes MimeTypes' assumed charset for text/plain into the Content-Type
+                // header when none is set explicitly; Jetty 9 did not. Cosmetic, not a functional change.
+                () -> assertThat(response.headers.get("Content-Type")).isEqualTo("text/plain;charset=iso-8859-1")
+        );
     }
 }

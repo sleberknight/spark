@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import spark.util.SparkTestUtil;
 
 import static spark.Service.ignite;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * Created by Tom on 08/02/2017.
@@ -43,8 +44,10 @@ public class ServicePortIntegrationTest {
         SparkTestUtil testUtil = new SparkTestUtil(actualPort);
 
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello World!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello World!")
+        );
     }
 
 }

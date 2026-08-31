@@ -11,6 +11,7 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ResponseTest {
 
@@ -127,12 +128,14 @@ public class ResponseTest {
                                        int maxAge,
                                        boolean secured,
                                        boolean httpOnly) {
-        assertThat(cookie.getDomain()).as("Should return cookie domain specified").isEqualTo(domain);
-        assertThat(cookie.getPath()).as("Should return cookie path specified").isEqualTo(path);
-        assertThat(cookie.getValue()).as("Should return cookie value specified").isEqualTo(value);
-        assertThat(cookie.getMaxAge()).as("Should return cookie max age specified").isEqualTo(maxAge);
-        assertThat(cookie.getSecure()).as("Should return cookie secure specified").isEqualTo(secured);
-        assertThat(cookie.isHttpOnly()).as("Should return cookie http only specified").isEqualTo(httpOnly);
+        assertAll(
+                () -> assertThat(cookie.getDomain()).as("Should return cookie domain specified").isEqualTo(domain),
+                () -> assertThat(cookie.getPath()).as("Should return cookie path specified").isEqualTo(path),
+                () -> assertThat(cookie.getValue()).as("Should return cookie value specified").isEqualTo(value),
+                () -> assertThat(cookie.getMaxAge()).as("Should return cookie max age specified").isEqualTo(maxAge),
+                () -> assertThat(cookie.getSecure()).as("Should return cookie secure specified").isEqualTo(secured),
+                () -> assertThat(cookie.isHttpOnly()).as("Should return cookie http only specified").isEqualTo(httpOnly)
+        );
     }
 
     @Test
@@ -263,8 +266,10 @@ public class ResponseTest {
         response.removeCookie(finalName);
         verify(httpServletResponse, times(2)).addCookie(cookieArgumentCaptor.capture());
 
-        assertThat(cookieArgumentCaptor.getValue().getValue()).as("Should return empty value for the given cookie name").isEqualTo("");
-        assertThat(cookieArgumentCaptor.getValue().getMaxAge()).as("Should return an 0 for maximum cookie age").isEqualTo(0);
+        assertAll(
+                () -> assertThat(cookieArgumentCaptor.getValue().getValue()).as("Should return empty value for the given cookie name").isEqualTo(""),
+                () -> assertThat(cookieArgumentCaptor.getValue().getMaxAge()).as("Should return an 0 for maximum cookie age").isEqualTo(0)
+        );
     }
 
     @Test

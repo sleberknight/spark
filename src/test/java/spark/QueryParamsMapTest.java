@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class QueryParamsMapTest {
 
@@ -19,8 +20,10 @@ public class QueryParamsMapTest {
         
         QueryParamsMap queryMap = new QueryParamsMap(params);
         
-        assertThat(queryMap.get("user").get("info").get("name").value()).isEqualTo("fede");
-        assertThat(queryMap.get("user","info","name").value()).isEqualTo("fede");
+        assertAll(
+                () -> assertThat(queryMap.get("user").get("info").get("name").value()).isEqualTo("fede"),
+                () -> assertThat(queryMap.get("user","info","name").value()).isEqualTo("fede")
+        );
     }
     
     @Test
@@ -30,19 +33,19 @@ public class QueryParamsMapTest {
         queryMap.loadKeys("user[info][first_name]",new String[] {"federico"});
         queryMap.loadKeys("user[info][last_name]",new String[] {"dayan"});
 
-        assertThat(queryMap.getQueryMap().isEmpty()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().isEmpty()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().isEmpty()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().get("first_name").getValues()[0]).isEqualTo("federico");
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().get("last_name").getValues()[0]).isEqualTo("dayan");
-
-        assertThat(queryMap.hasKey("user")).isTrue();
-        assertThat(queryMap.hasKey("frame")).isFalse();
-        assertThat(queryMap.hasKey(null)).isFalse();
-
-        assertThat(queryMap.hasKeys()).isTrue();
-        assertThat(queryMap.hasValue()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().get("last_name").hasValue()).isTrue();
+        assertAll(
+                () -> assertThat(queryMap.getQueryMap().isEmpty()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().isEmpty()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().isEmpty()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().get("first_name").getValues()[0]).isEqualTo("federico"),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().get("last_name").getValues()[0]).isEqualTo("dayan"),
+                () -> assertThat(queryMap.hasKey("user")).isTrue(),
+                () -> assertThat(queryMap.hasKey("frame")).isFalse(),
+                () -> assertThat(queryMap.hasKey(null)).isFalse(),
+                () -> assertThat(queryMap.hasKeys()).isTrue(),
+                () -> assertThat(queryMap.hasValue()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("info").getQueryMap().get("last_name").hasValue()).isTrue()
+        );
     }
     
     @Test
@@ -52,19 +55,23 @@ public class QueryParamsMapTest {
         queryMap.loadKeys("user[age]",new String[] {"10"});
         queryMap.loadKeys("user[agrees]",new String[] {"true"});
 
-        assertThat(queryMap.get("user").get("age").integerValue()).isEqualTo(10);
-        assertThat(queryMap.get("user").get("age").floatValue()).isEqualTo(10f);
-        assertThat(queryMap.get("user").get("age").doubleValue()).isEqualTo(10d);
-        assertThat(queryMap.get("user").get("age").longValue()).isEqualTo(10L);
-        assertThat(queryMap.get("user").get("agrees").booleanValue()).isEqualTo(Boolean.TRUE);
+        assertAll(
+                () -> assertThat(queryMap.get("user").get("age").integerValue()).isEqualTo(10),
+                () -> assertThat(queryMap.get("user").get("age").floatValue()).isEqualTo(10f),
+                () -> assertThat(queryMap.get("user").get("age").doubleValue()).isEqualTo(10d),
+                () -> assertThat(queryMap.get("user").get("age").longValue()).isEqualTo(10L),
+                () -> assertThat(queryMap.get("user").get("agrees").booleanValue()).isEqualTo(Boolean.TRUE)
+        );
     }
     
     @Test
     public void parseKeyShouldParseRootKey() {
         String[] parsed = queryMap.parseKey("user[name][more]");
         
-        assertThat(parsed[0]).isEqualTo("user");
-        assertThat(parsed[1]).isEqualTo("[name][more]");
+        assertAll(
+                () -> assertThat(parsed[0]).isEqualTo("user"),
+                () -> assertThat(parsed[1]).isEqualTo("[name][more]")
+        );
     }
     
     @Test
@@ -95,10 +102,12 @@ public class QueryParamsMapTest {
     public void testConstructor() {
         QueryParamsMap queryMap = new QueryParamsMap("user[name][more]","fede");
 
-        assertThat(queryMap.getQueryMap().isEmpty()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().isEmpty()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("name").getQueryMap().isEmpty()).isFalse();
-        assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("name").getQueryMap().get("more").getValues()[0]).isEqualTo("fede");
+        assertAll(
+                () -> assertThat(queryMap.getQueryMap().isEmpty()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().isEmpty()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("name").getQueryMap().isEmpty()).isFalse(),
+                () -> assertThat(queryMap.getQueryMap().get("user").getQueryMap().get("name").getQueryMap().get("more").getValues()[0]).isEqualTo("fede")
+        );
     }
     
     @Test
@@ -112,9 +121,11 @@ public class QueryParamsMapTest {
         
         Map<String,String[]> map = queryMap.get("user","info").toMap();
         
-        assertThat(map.size()).isEqualTo(2);
-        assertThat(map.get("name")[0]).isEqualTo("fede");
-        assertThat(map.get("last")[0]).isEqualTo("dayan");
+        assertAll(
+                () -> assertThat(map.size()).isEqualTo(2),
+                () -> assertThat(map.get("name")[0]).isEqualTo("fede"),
+                () -> assertThat(map.get("last")[0]).isEqualTo("dayan")
+        );
     }
     
     

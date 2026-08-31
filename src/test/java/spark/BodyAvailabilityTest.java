@@ -14,6 +14,7 @@ import static spark.Spark.after;
 import static spark.Spark.before;
 
 import static spark.Spark.post;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BodyAvailabilityTest {
 
@@ -71,11 +72,12 @@ public class BodyAvailabilityTest {
     public void testPost() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("POST", "/hello", BODY_CONTENT);
         LOGGER.info(response.body);
-        assertThat(response.status).isEqualTo(HTTP_OK);
-        assertThat(response.body.contains(BODY_CONTENT)).isTrue();
-
-        assertThat(beforeBody).isEqualTo(BODY_CONTENT);
-        assertThat(routeBody).isEqualTo(BODY_CONTENT);
-        assertThat(afterBody).isEqualTo(BODY_CONTENT);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(HTTP_OK),
+                () -> assertThat(response.body.contains(BODY_CONTENT)).isTrue(),
+                () -> assertThat(beforeBody).isEqualTo(BODY_CONTENT),
+                () -> assertThat(routeBody).isEqualTo(BODY_CONTENT),
+                () -> assertThat(afterBody).isEqualTo(BODY_CONTENT)
+        );
     }
 }

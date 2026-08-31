@@ -26,6 +26,7 @@ import spark.util.SparkTestUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static spark.Service.ignite;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * Created by Per Wendel on 2016-02-18.
@@ -59,15 +60,19 @@ public class MultipleServicesTest {
     @Test
     public void testGetHello() throws Exception {
         SparkTestUtil.UrlResponse response = firstClient.doMethod("GET", "/hello", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello World!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello World!")
+        );
     }
 
     @Test
     public void testGetRedirectedHi() throws Exception {
         SparkTestUtil.UrlResponse response = secondClient.doMethod("GET", "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello World!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello World!")
+        );
     }
 
     @Test
@@ -79,8 +84,10 @@ public class MultipleServicesTest {
     @Test
     public void testGetUniqueForSecondWithSecond() throws Exception {
         SparkTestUtil.UrlResponse response = secondClient.doMethod("GET", "/uniqueforsecond", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Bompton");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Bompton")
+        );
     }
 
     @Test
@@ -92,8 +99,10 @@ public class MultipleServicesTest {
     @Test
     public void testStaticFileCssStyleCssWithSecond() throws Exception {
         SparkTestUtil.UrlResponse response = secondClient.doMethod("GET", "/css/style.css", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Content of css file");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Content of css file")
+        );
     }
 
     @Test

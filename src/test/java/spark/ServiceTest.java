@@ -19,6 +19,7 @@ import spark.ssl.SslStores;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static spark.Service.ignite;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ServiceTest {
 
@@ -178,9 +179,11 @@ public class ServiceTest {
         int maxThreads = KiwiReflection.getTypedFieldValue(service, "maxThreads", Integer.class);
         int minThreads = KiwiReflection.getTypedFieldValue(service, "minThreads", Integer.class);
         int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
-        assertThat(maxThreads).as("Should return maxThreads specified").isEqualTo(100);
-        assertThat(minThreads).as("Should return minThreads specified").isEqualTo(-1);
-        assertThat(threadIdleTimeoutMillis).as("Should return threadIdleTimeoutMillis specified").isEqualTo(-1);
+        assertAll(
+                () -> assertThat(maxThreads).as("Should return maxThreads specified").isEqualTo(100),
+                () -> assertThat(minThreads).as("Should return minThreads specified").isEqualTo(-1),
+                () -> assertThat(threadIdleTimeoutMillis).as("Should return threadIdleTimeoutMillis specified").isEqualTo(-1)
+        );
     }
 
     @Test
@@ -189,9 +192,11 @@ public class ServiceTest {
         int maxThreads = KiwiReflection.getTypedFieldValue(service, "maxThreads", Integer.class);
         int minThreads = KiwiReflection.getTypedFieldValue(service, "minThreads", Integer.class);
         int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
-        assertThat(maxThreads).as("Should return maxThreads specified").isEqualTo(100);
-        assertThat(minThreads).as("Should return minThreads specified").isEqualTo(50);
-        assertThat(threadIdleTimeoutMillis).as("Should return threadIdleTimeoutMillis specified").isEqualTo(75);
+        assertAll(
+                () -> assertThat(maxThreads).as("Should return maxThreads specified").isEqualTo(100),
+                () -> assertThat(minThreads).as("Should return minThreads specified").isEqualTo(50),
+                () -> assertThat(threadIdleTimeoutMillis).as("Should return threadIdleTimeoutMillis specified").isEqualTo(75)
+        );
     }
 
     @Test
@@ -207,11 +212,13 @@ public class ServiceTest {
     public void testSecure_thenReturnNewSslStores() {
         service.secure("keyfile", "keypassword", "truststorefile", "truststorepassword");
         SslStores sslStores = KiwiReflection.getTypedFieldValue(service, "sslStores", SslStores.class);
-        assertThat(sslStores).as("Should return a SslStores because we configured it to have one").isNotNull();
-        assertThat(sslStores.keystoreFile()).as("Should return keystoreFile from SslStores").isEqualTo("keyfile");
-        assertThat(sslStores.keystorePassword()).as("Should return keystorePassword from SslStores").isEqualTo("keypassword");
-        assertThat(sslStores.trustStoreFile()).as("Should return trustStoreFile from SslStores").isEqualTo("truststorefile");
-        assertThat(sslStores.trustStorePassword()).as("Should return trustStorePassword from SslStores").isEqualTo("truststorepassword");
+        assertAll(
+                () -> assertThat(sslStores).as("Should return a SslStores because we configured it to have one").isNotNull(),
+                () -> assertThat(sslStores.keystoreFile()).as("Should return keystoreFile from SslStores").isEqualTo("keyfile"),
+                () -> assertThat(sslStores.keystorePassword()).as("Should return keystorePassword from SslStores").isEqualTo("keypassword"),
+                () -> assertThat(sslStores.trustStoreFile()).as("Should return trustStoreFile from SslStores").isEqualTo("truststorefile"),
+                () -> assertThat(sslStores.trustStorePassword()).as("Should return trustStorePassword from SslStores").isEqualTo("truststorepassword")
+        );
     }
 
     @Test

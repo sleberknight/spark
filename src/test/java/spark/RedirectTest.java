@@ -27,6 +27,7 @@ import spark.util.SparkTestUtil;
 import static spark.Spark.get;
 
 import static spark.Spark.redirect;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * Tests the redirect utility methods in {@link spark.Redirect}
@@ -62,57 +63,73 @@ public class RedirectTest {
     @Test
     public void testRedirectGet() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectPost() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("POST", "/hi", "");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectPut() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("PUT", "/hi", "");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectDelete() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("DELETE", "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectAnyGet() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/any", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectAnyPut() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("PUT", "/any", "");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectAnyPost() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("POST", "/any", "");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test
     public void testRedirectAnyDelete() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("DELETE", "/any", "");
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo(REDIRECTED);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo(REDIRECTED)
+        );
     }
 
     @Test

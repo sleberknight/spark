@@ -23,6 +23,7 @@ import static spark.Spark.halt;
 import static spark.Spark.patch;
 
 import static spark.Spark.post;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class GenericSecureIntegrationTest {
 
@@ -81,8 +82,10 @@ public class GenericSecureIntegrationTest {
     @Test
     public void testGetHi() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethodSecure("GET", "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello World!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello World!")
+        );
     }
 
     @Test
@@ -101,8 +104,10 @@ public class GenericSecureIntegrationTest {
     @Test
     public void testHiHead() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("HEAD", "/hi", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("")
+        );
     }
 
     @Test
@@ -114,29 +119,37 @@ public class GenericSecureIntegrationTest {
     @Test
     public void testGetRoot() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("Hello Root!");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("Hello Root!")
+        );
     }
 
     @Test
     public void testEchoParam1() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/shizzy", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("echo: shizzy");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("echo: shizzy")
+        );
     }
 
     @Test
     public void testEchoParam2() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/gunit", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("echo: gunit");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("echo: gunit")
+        );
     }
 
     @Test
     public void testEchoParamWithMaj() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/paramwithmaj/plop", null);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body).isEqualTo("echo: plop");
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body).isEqualTo("echo: plop")
+        );
     }
 
     @Test
@@ -155,15 +168,19 @@ public class GenericSecureIntegrationTest {
     public void testPost() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("POST", "/poster", "Fo shizzy");
         LOGGER.info(response.body);
-        assertThat(response.status).isEqualTo(201);
-        assertThat(response.body.contains("Fo shizzy")).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(201),
+                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+        );
     }
 
     @Test
     public void testPatch() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("PATCH", "/patcher", "Fo shizzy");
         LOGGER.info(response.body);
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains("Fo shizzy")).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains("Fo shizzy")).isTrue()
+        );
     }
 }

@@ -38,6 +38,7 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 
 import static spark.Spark.staticFiles;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * Test static files
@@ -171,15 +172,19 @@ public class StaticFilesMemberTest {
     private static void testGet() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains(FO_SHIZZY)).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains(FO_SHIZZY)).isTrue()
+        );
     }
 
     @Test
     public void testExceptionMapping404() throws Exception {
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/filethatdoesntexist.html", null);
 
-        assertThat(response.status).isEqualTo(404);
-        assertThat(response.body).isEqualTo(NOT_FOUND_BRO);
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(404),
+                () -> assertThat(response.body).isEqualTo(NOT_FOUND_BRO)
+        );
     }
 }

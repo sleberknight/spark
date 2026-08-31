@@ -17,6 +17,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static spark.Spark.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RequestTest {
 
@@ -231,9 +232,10 @@ public class RequestTest {
 
         when(servletRequest.getCookies()).thenReturn(cookieArray);
 
-        assertThat(request.cookies().size() == 2).as("The count of cookies returned should be the same as those in the request").isTrue();
-
-        assertThat(request.cookies()).as("A Map of Cookies should have been returned because they exist").isEqualTo(expected);
+        assertAll(
+                () -> assertThat(request.cookies().size() == 2).as("The count of cookies returned should be the same as those in the request").isTrue(),
+                () -> assertThat(request.cookies()).as("A Map of Cookies should have been returned because they exist").isEqualTo(expected)
+        );
 
     }
 
@@ -242,9 +244,10 @@ public class RequestTest {
 
         when(servletRequest.getCookies()).thenReturn(null);
 
-        assertThat(request.cookies()).as("A Map of Cookies should have been instantiated even if cookies are not present in the request").isNotNull();
-
-        assertThat(request.cookies().size() == 0).as("The Map of cookies should be empty because cookies are not present in the request").isTrue();
+        assertAll(
+                () -> assertThat(request.cookies()).as("A Map of Cookies should have been instantiated even if cookies are not present in the request").isNotNull(),
+                () -> assertThat(request.cookies().size() == 0).as("The Map of cookies should be empty because cookies are not present in the request").isTrue()
+        );
 
     }
 
@@ -260,9 +263,10 @@ public class RequestTest {
         Cookie[] cookieArray = cookies.toArray(new Cookie[cookies.size()]);
         when(servletRequest.getCookies()).thenReturn(cookieArray);
 
-        assertThat(request.cookie(cookieKey)).as("A value for the key provided should exist because a cookie with the same key is present").isNotNull();
-
-        assertThat(request.cookie(cookieKey)).as("The correct value for the cookie key supplied should be returned").isEqualTo(cookieValue);
+        assertAll(
+                () -> assertThat(request.cookie(cookieKey)).as("A value for the key provided should exist because a cookie with the same key is present").isNotNull(),
+                () -> assertThat(request.cookie(cookieKey)).as("The correct value for the cookie key supplied should be returned").isEqualTo(cookieValue)
+        );
 
     }
 

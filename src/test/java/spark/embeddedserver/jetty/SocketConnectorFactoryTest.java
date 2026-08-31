@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class SocketConnectorFactoryTest {
 
@@ -50,9 +51,11 @@ public class SocketConnectorFactoryTest {
         int internalPort = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"), Integer.class);
         Server internalServerConnector = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_server"), Server.class);
 
-        assertThat(internalHost).as("Server Connector Host should be set to the specified server").isEqualTo(host);
-        assertThat(internalPort).as("Server Connector Port should be set to the specified port").isEqualTo(port);
-        assertThat(server).as("Server Connector Server should be set to the specified server").isEqualTo(internalServerConnector);
+        assertAll(
+                () -> assertThat(internalHost).as("Server Connector Host should be set to the specified server").isEqualTo(host),
+                () -> assertThat(internalPort).as("Server Connector Port should be set to the specified port").isEqualTo(port),
+                () -> assertThat(server).as("Server Connector Server should be set to the specified server").isEqualTo(internalServerConnector)
+        );
     }
 
     @Test

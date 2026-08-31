@@ -28,6 +28,7 @@ import spark.util.SparkTestUtil;
 import static spark.Spark.awaitInitialization;
 
 import static spark.Spark.stop;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * Tests the GZIP compression support in Spark.
@@ -66,8 +67,10 @@ public class GzipTest {
         SparkTestUtil testUtil = new SparkTestUtil(4567);
         SparkTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        assertThat(response.status).isEqualTo(200);
-        assertThat(response.body.contains(GzipExample.FO_SHIZZY)).isTrue();
+        assertAll(
+                () -> assertThat(response.status).isEqualTo(200),
+                () -> assertThat(response.body.contains(GzipExample.FO_SHIZZY)).isTrue()
+        );
     }
 
 }
