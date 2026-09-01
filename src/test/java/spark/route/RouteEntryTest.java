@@ -42,8 +42,7 @@ public class RouteEntryTest {
         entry.httpMethod = HttpMethod.post;
         entry.path = "/test";
 
-        assertThat(entry.matches(HttpMethod.get, "/path"))
-                .isFalse();
+        assertThat(entry.matches(HttpMethod.get, "/path")).isFalse();
     }
 
     @Test
@@ -79,8 +78,7 @@ public class RouteEntryTest {
         entry.httpMethod = HttpMethod.get;
         entry.path = "/test/";
 
-        assertThat(entry.matches(HttpMethod.get, "/test/"))
-                .isTrue();
+        assertThat(entry.matches(HttpMethod.get, "/test/")).isTrue();
     }
 
     @Test
@@ -90,8 +88,7 @@ public class RouteEntryTest {
         entry.httpMethod = HttpMethod.get;
         entry.path = "/test/*";
 
-        assertThat(entry.matches(HttpMethod.get, "/test/me"))
-                .isTrue();
+        assertThat(entry.matches(HttpMethod.get, "/test/me")).isTrue();
     }
 
     @Test
@@ -101,8 +98,7 @@ public class RouteEntryTest {
         entry.httpMethod = HttpMethod.get;
         entry.path = "/test/me";
 
-        assertThat(entry.matches(HttpMethod.get, "/test/other"))
-                .isFalse();
+        assertThat(entry.matches(HttpMethod.get, "/test/other")).isFalse();
     }
 
     @Test
@@ -112,8 +108,7 @@ public class RouteEntryTest {
         entry.httpMethod = HttpMethod.get;
         entry.path = "/test/this/resource/*";
 
-        assertThat(entry.matches(HttpMethod.get, "/test/this/resource/child/id"))
-                .isTrue();
+        assertThat(entry.matches(HttpMethod.get, "/test/this/resource/child/id")).isTrue();
     }
 
 }

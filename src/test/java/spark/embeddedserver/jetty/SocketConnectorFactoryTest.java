@@ -52,12 +52,9 @@ public class SocketConnectorFactoryTest {
         Server internalServerConnector = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_server"), Server.class);
 
         assertAll(
-                () -> assertThat(internalHost)
-                        .isEqualTo(host),
-                () -> assertThat(internalPort)
-                        .isEqualTo(port),
-                () -> assertThat(server)
-                        .isEqualTo(internalServerConnector)
+                () -> assertThat(internalHost).isEqualTo(host),
+                () -> assertThat(internalPort).isEqualTo(port),
+                () -> assertThat(server).isEqualTo(internalServerConnector)
         );
     }
 
@@ -116,26 +113,21 @@ public class SocketConnectorFactoryTest {
         int internalPort = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_port"), Integer.class);
 
         assertAll(
-                () -> assertThat(internalHost)
-                        .isEqualTo(host),
-                () -> assertThat(internalPort)
-                        .isEqualTo(port)
+                () -> assertThat(internalHost).isEqualTo(host),
+                () -> assertThat(internalPort).isEqualTo(port)
         );
 
         @SuppressWarnings("unchecked")
         Map<String, ConnectionFactory> factories = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_factories"), Map.class);
 
-        assertThat(factories.containsKey("ssl") && factories.get("ssl") != null)
-                .isTrue();
+        assertThat(factories.containsKey("ssl") && factories.get("ssl") != null).isTrue();
 
         SslConnectionFactory sslConnectionFactory = (SslConnectionFactory) factories.get("ssl");
         SslContextFactory sslContextFactory = sslConnectionFactory.getSslContextFactory();
 
         assertAll(
-                () -> assertThat(sslContextFactory.getKeyStoreResource().getFileName())
-                        .isEqualTo(keystoreFileName),
-                () -> assertThat(sslContextFactory.getTrustStoreResource().getFileName())
-                        .isEqualTo(truststoreFileName)
+                () -> assertThat(sslContextFactory.getKeyStoreResource().getFileName()).isEqualTo(keystoreFileName),
+                () -> assertThat(sslContextFactory.getTrustStoreResource().getFileName()).isEqualTo(truststoreFileName)
         );
 
     }

@@ -20,8 +20,7 @@ public class ServletFlagTest {
     public void testRunFromServlet_whenDefault() {
 
         AtomicBoolean isRunningFromServlet = KiwiReflection.getTypedFieldValue(null, isRunningFromServletField(), AtomicBoolean.class);
-        assertThat(isRunningFromServlet.get())
-                .isFalse();
+        assertThat(isRunningFromServlet.get()).isFalse();
     }
 
     @Test
@@ -30,15 +29,13 @@ public class ServletFlagTest {
         ServletFlag.runFromServlet();
         AtomicBoolean isRunningFromServlet = KiwiReflection.getTypedFieldValue(null, isRunningFromServletField(), AtomicBoolean.class);
 
-        assertThat(isRunningFromServlet.get())
-                .isTrue();
+        assertThat(isRunningFromServlet.get()).isTrue();
     }
 
     @Test
     public void testIsRunningFromServlet_whenDefault() {
 
-        assertThat(ServletFlag.isRunningFromServlet())
-                .isFalse();
+        assertThat(ServletFlag.isRunningFromServlet()).isFalse();
 
     }
 
@@ -46,8 +43,7 @@ public class ServletFlagTest {
     public void testIsRunningFromServlet_whenRunningFromServlet() {
 
         ServletFlag.runFromServlet();
-        assertThat(ServletFlag.isRunningFromServlet())
-                .isTrue();
+        assertThat(ServletFlag.isRunningFromServlet()).isTrue();
     }
 
     private static Field isRunningFromServletField() {

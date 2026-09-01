@@ -50,15 +50,13 @@ public class SessionTest {
     public void testSession() {
 
         HttpSession internalSession = KiwiReflection.getTypedFieldValue(session, "session", HttpSession.class);
-        assertThat(internalSession)
-                .isEqualTo(httpSession);
+        assertThat(internalSession).isEqualTo(httpSession);
     }
 
     @Test
     public void testRaw() {
 
-        assertThat(session.raw())
-                .isEqualTo(httpSession);
+        assertThat(session.raw()).isEqualTo(httpSession);
     }
 
     @Test
@@ -66,8 +64,7 @@ public class SessionTest {
 
         when(httpSession.getAttribute("name")).thenReturn("Jett");
 
-        assertThat((String) session.attribute("name"))
-                .isEqualTo("Jett");
+        assertThat((String) session.attribute("name")).isEqualTo("Jett");
 
     }
 
@@ -86,8 +83,7 @@ public class SessionTest {
 
         when(httpSession.getAttributeNames()).thenReturn(Collections.enumeration(attributes));
 
-        assertThat(session.attributes())
-                .isEqualTo(attributes);
+        assertThat(session.attributes()).isEqualTo(attributes);
     }
 
     @Test
@@ -95,8 +91,7 @@ public class SessionTest {
 
         when(httpSession.getCreationTime()).thenReturn(10000000l);
 
-        assertThat(session.creationTime())
-                .isEqualTo(10000000l);
+        assertThat(session.creationTime()).isEqualTo(10000000l);
     }
 
     @Test
@@ -104,8 +99,7 @@ public class SessionTest {
 
         when(httpSession.getId()).thenReturn("id");
 
-        assertThat(session.id())
-                .isEqualTo("id");
+        assertThat(session.id()).isEqualTo("id");
     }
 
     @Test
@@ -113,8 +107,7 @@ public class SessionTest {
 
         when(httpSession.getLastAccessedTime()).thenReturn(20000000l);
 
-        assertThat(session.lastAccessedTime())
-                .isEqualTo(20000000l);
+        assertThat(session.lastAccessedTime()).isEqualTo(20000000l);
     }
 
     @Test
@@ -122,8 +115,7 @@ public class SessionTest {
 
         when(httpSession.getMaxInactiveInterval()).thenReturn(100);
 
-        assertThat(session.maxInactiveInterval())
-                .isEqualTo(100);
+        assertThat(session.maxInactiveInterval()).isEqualTo(100);
     }
 
     @Test
@@ -147,8 +139,7 @@ public class SessionTest {
 
         when(httpSession.isNew()).thenReturn(true);
 
-        assertThat(session.isNew())
-                .isTrue();
+        assertThat(session.isNew()).isTrue();
     }
 
     @Test

@@ -35,8 +35,7 @@ public class ResourceUtilsTest {
         File file = ResourceUtils.getFile(url, "Some description");
 
         //then
-        assertThat(new File(ResourceUtils.toURI(url).getSchemeSpecificPart()))
-                .isEqualTo(file);
+        assertThat(new File(ResourceUtils.toURI(url).getSchemeSpecificPart())).isEqualTo(file);
     }
 
 }

@@ -13,8 +13,7 @@ public class CollectionUtilsTest {
 
         Collection<Object> testCollection = new ArrayList<>();
 
-        assertThat(CollectionUtils.isEmpty(testCollection))
-                .isTrue();
+        assertThat(CollectionUtils.isEmpty(testCollection)).isTrue();
 
     }
 
@@ -25,8 +24,7 @@ public class CollectionUtilsTest {
         testCollection.add(1);
         testCollection.add(2);
 
-        assertThat(CollectionUtils.isEmpty(testCollection))
-                .isFalse();
+        assertThat(CollectionUtils.isEmpty(testCollection)).isFalse();
 
     }
 
@@ -35,8 +33,7 @@ public class CollectionUtilsTest {
 
         Collection<Integer> testCollection = null;
 
-        assertThat(CollectionUtils.isEmpty(testCollection))
-                .isTrue();
+        assertThat(CollectionUtils.isEmpty(testCollection)).isTrue();
 
     }
 
@@ -45,8 +42,7 @@ public class CollectionUtilsTest {
 
         Collection<Object> testCollection = new ArrayList<>();
 
-        assertThat(CollectionUtils.isNotEmpty(testCollection))
-                .isFalse();
+        assertThat(CollectionUtils.isNotEmpty(testCollection)).isFalse();
 
     }
 
@@ -57,8 +53,7 @@ public class CollectionUtilsTest {
         testCollection.add(1);
         testCollection.add(2);
 
-        assertThat(CollectionUtils.isNotEmpty(testCollection))
-                .isTrue();
+        assertThat(CollectionUtils.isNotEmpty(testCollection)).isTrue();
 
     }
 
@@ -67,8 +62,7 @@ public class CollectionUtilsTest {
 
         Collection<Object> testCollection = null;
 
-        assertThat(CollectionUtils.isNotEmpty(testCollection))
-                .isFalse();
+        assertThat(CollectionUtils.isNotEmpty(testCollection)).isFalse();
 
     }
 }

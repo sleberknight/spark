@@ -35,15 +35,13 @@ public class ServiceTest {
 
     @Test
     public void testEmbeddedServerIdentifier_defaultAndSet() {
-        assertThat(service.embeddedServerIdentifier())
-                .isEqualTo(EmbeddedServers.defaultIdentifier());
+        assertThat(service.embeddedServerIdentifier()).isEqualTo(EmbeddedServers.defaultIdentifier());
 
         Object obj = new Object();
 
         service.embeddedServerIdentifier(obj);
 
-        assertThat(service.embeddedServerIdentifier())
-                .isEqualTo(obj);
+        assertThat(service.embeddedServerIdentifier()).isEqualTo(obj);
     }
 
     @Test
@@ -82,8 +80,7 @@ public class ServiceTest {
         service.ipAddress(IP_ADDRESS);
 
         String ipAddress = KiwiReflection.getTypedFieldValue(service, "ipAddress", String.class);
-        assertThat(ipAddress)
-                .isEqualTo(IP_ADDRESS);
+        assertThat(ipAddress).isEqualTo(IP_ADDRESS);
     }
 
     @Test
@@ -100,8 +97,7 @@ public class ServiceTest {
         service.ipAddress(IP_ADDRESS);
 
         String ipAddress = KiwiReflection.getTypedFieldValue(service, "ipAddress", String.class);
-        assertThat(ipAddress)
-                .isEqualTo(IP_ADDRESS);
+        assertThat(ipAddress).isEqualTo(IP_ADDRESS);
     }
 
     @Test
@@ -118,8 +114,7 @@ public class ServiceTest {
         service.port(8080);
 
         int port = KiwiReflection.getTypedFieldValue(service, "port", Integer.class);
-        assertThat(port)
-                .isEqualTo(8080);
+        assertThat(port).isEqualTo(8080);
     }
 
     @Test
@@ -136,8 +131,7 @@ public class ServiceTest {
         service.port(8080);
 
         int port = KiwiReflection.getTypedFieldValue(service, "port", Integer.class);
-        assertThat(port)
-                .isEqualTo(8080);
+        assertThat(port).isEqualTo(8080);
     }
 
     @Test
@@ -166,8 +160,7 @@ public class ServiceTest {
 
         int actualPort = service.port();
 
-        assertThat(actualPort)
-                .isEqualTo(expectedPort);
+        assertThat(actualPort).isEqualTo(expectedPort);
     }
 
     @Test
@@ -177,8 +170,7 @@ public class ServiceTest {
 
         int actualPort = service.port();
 
-        assertThat(actualPort)
-                .isEqualTo(expectedPort);
+        assertThat(actualPort).isEqualTo(expectedPort);
     }
 
     @Test
@@ -188,12 +180,9 @@ public class ServiceTest {
         int minThreads = KiwiReflection.getTypedFieldValue(service, "minThreads", Integer.class);
         int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
         assertAll(
-                () -> assertThat(maxThreads)
-                        .isEqualTo(100),
-                () -> assertThat(minThreads)
-                        .isEqualTo(-1),
-                () -> assertThat(threadIdleTimeoutMillis)
-                        .isEqualTo(-1)
+                () -> assertThat(maxThreads).isEqualTo(100),
+                () -> assertThat(minThreads).isEqualTo(-1),
+                () -> assertThat(threadIdleTimeoutMillis).isEqualTo(-1)
         );
     }
 
@@ -204,12 +193,9 @@ public class ServiceTest {
         int minThreads = KiwiReflection.getTypedFieldValue(service, "minThreads", Integer.class);
         int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
         assertAll(
-                () -> assertThat(maxThreads)
-                        .isEqualTo(100),
-                () -> assertThat(minThreads)
-                        .isEqualTo(50),
-                () -> assertThat(threadIdleTimeoutMillis)
-                        .isEqualTo(75)
+                () -> assertThat(maxThreads).isEqualTo(100),
+                () -> assertThat(minThreads).isEqualTo(50),
+                () -> assertThat(threadIdleTimeoutMillis).isEqualTo(75)
         );
     }
 
@@ -227,16 +213,11 @@ public class ServiceTest {
         service.secure("keyfile", "keypassword", "truststorefile", "truststorepassword");
         SslStores sslStores = KiwiReflection.getTypedFieldValue(service, "sslStores", SslStores.class);
         assertAll(
-                () -> assertThat(sslStores)
-                        .isNotNull(),
-                () -> assertThat(sslStores.keystoreFile())
-                        .isEqualTo("keyfile"),
-                () -> assertThat(sslStores.keystorePassword())
-                        .isEqualTo("keypassword"),
-                () -> assertThat(sslStores.trustStoreFile())
-                        .isEqualTo("truststorefile"),
-                () -> assertThat(sslStores.trustStorePassword())
-                        .isEqualTo("truststorepassword")
+                () -> assertThat(sslStores).isNotNull(),
+                () -> assertThat(sslStores.keystoreFile()).isEqualTo("keyfile"),
+                () -> assertThat(sslStores.keystorePassword()).isEqualTo("keypassword"),
+                () -> assertThat(sslStores.trustStoreFile()).isEqualTo("truststorefile"),
+                () -> assertThat(sslStores.trustStorePassword()).isEqualTo("truststorepassword")
         );
     }
 

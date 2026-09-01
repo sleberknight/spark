@@ -118,8 +118,7 @@ public class RequestTest {
         when(servletRequest.getServletPath()).thenReturn(THE_SERVLET_PATH);
 
         Request request = new Request(match, servletRequest);
-        assertThat(request.servletPath())
-                .isEqualTo(THE_SERVLET_PATH);
+        assertThat(request.servletPath()).isEqualTo(THE_SERVLET_PATH);
     }
 
     @Test
@@ -128,15 +127,13 @@ public class RequestTest {
         when(servletRequest.getContextPath()).thenReturn(THE_CONTEXT_PATH);
 
         Request request = new Request(match, servletRequest);
-        assertThat(request.contextPath())
-                .isEqualTo(THE_CONTEXT_PATH);
+        assertThat(request.contextPath()).isEqualTo(THE_CONTEXT_PATH);
     }
 
     @Test
     public void shouldBeAbleToGetTheMatchedPath() {
         Request request = new Request(matchWithParams, servletRequest);
-        assertThat(request.matchedPath())
-                .isEqualTo(THE_MATCHED_ROUTE);
+        assertThat(request.matchedPath()).isEqualTo(THE_MATCHED_ROUTE);
         try {
             http.get("/users/bob");
         } catch (Exception e) {
@@ -146,18 +143,15 @@ public class RequestTest {
     }
 
     public void shouldBeAbleToGetTheMatchedPathInBeforeFilter(Request q) {
-        assertThat(q.matchedPath())
-                .isEqualTo(BEFORE_MATCHED_ROUTE);
+        assertThat(q.matchedPath()).isEqualTo(BEFORE_MATCHED_ROUTE);
     }
 
     public void shouldBeAbleToGetTheMatchedPathInAfterFilter(Request q) {
-        assertThat(q.matchedPath())
-                .isEqualTo(AFTER_MATCHED_ROUTE);
+        assertThat(q.matchedPath()).isEqualTo(AFTER_MATCHED_ROUTE);
     }
 
     public void shouldBeAbleToGetTheMatchedPathInAfterAfterFilter(Request q) {
-        assertThat(q.matchedPath())
-                .isEqualTo(AFTERAFTER_MATCHED_ROUTE);
+        assertThat(q.matchedPath()).isEqualTo(AFTERAFTER_MATCHED_ROUTE);
     }
 
     @Test
@@ -165,8 +159,7 @@ public class RequestTest {
 
         when(servletRequest.getSession()).thenReturn(httpSession);
 
-        assertThat(request.session().raw())
-                .isEqualTo(httpSession);
+        assertThat(request.session().raw()).isEqualTo(httpSession);
     }
 
     @Test
@@ -174,8 +167,7 @@ public class RequestTest {
 
         when(servletRequest.getSession(true)).thenReturn(httpSession);
 
-        assertThat(request.session(true).raw())
-                .isEqualTo(httpSession);
+        assertThat(request.session(true).raw()).isEqualTo(httpSession);
 
     }
 
@@ -184,8 +176,7 @@ public class RequestTest {
 
         when(servletRequest.getSession(true)).thenReturn(httpSession);
 
-        assertThat(request.session(false))
-                .isEqualTo(null);
+        assertThat(request.session(false)).isEqualTo(null);
 
     }
 
@@ -251,10 +242,8 @@ public class RequestTest {
         when(servletRequest.getCookies()).thenReturn(cookieArray);
 
         assertAll(
-                () -> assertThat(request.cookies())
-                        .hasSize(2),
-                () -> assertThat(request.cookies())
-                        .isEqualTo(expected)
+                () -> assertThat(request.cookies()).hasSize(2),
+                () -> assertThat(request.cookies()).isEqualTo(expected)
         );
 
     }
@@ -268,8 +257,7 @@ public class RequestTest {
                 () -> assertThat(request.cookies())
                         .describedAs("A Map of Cookies should have been instantiated even if cookies are not present in the request")
                         .isNotNull(),
-                () -> assertThat(request.cookies())
-                        .isEmpty()
+                () -> assertThat(request.cookies()).isEmpty()
         );
 
     }
@@ -287,10 +275,8 @@ public class RequestTest {
         when(servletRequest.getCookies()).thenReturn(cookieArray);
 
         assertAll(
-                () -> assertThat(request.cookie(cookieKey))
-                        .isNotNull(),
-                () -> assertThat(request.cookie(cookieKey))
-                        .isEqualTo(cookieValue)
+                () -> assertThat(request.cookie(cookieKey)).isNotNull(),
+                () -> assertThat(request.cookie(cookieKey)).isEqualTo(cookieValue)
         );
 
     }
@@ -302,8 +288,7 @@ public class RequestTest {
 
         when(servletRequest.getCookies()).thenReturn(null);
 
-        assertThat(request.cookie(cookieKey))
-                .isNull();
+        assertThat(request.cookie(cookieKey)).isNull();
 
     }
 
@@ -314,8 +299,7 @@ public class RequestTest {
 
         when(servletRequest.getMethod()).thenReturn(requestMethod);
 
-        assertThat(request.requestMethod())
-                .isEqualTo(requestMethod);
+        assertThat(request.requestMethod()).isEqualTo(requestMethod);
 
     }
 
@@ -326,8 +310,7 @@ public class RequestTest {
 
         when(servletRequest.getScheme()).thenReturn(scheme);
 
-        assertThat(request.scheme())
-                .isEqualTo(scheme);
+        assertThat(request.scheme()).isEqualTo(scheme);
 
     }
 
@@ -338,8 +321,7 @@ public class RequestTest {
 
         when(servletRequest.getHeader("host")).thenReturn(host);
 
-        assertThat(request.host())
-                .isEqualTo(host);
+        assertThat(request.host()).isEqualTo(host);
 
     }
 
@@ -350,8 +332,7 @@ public class RequestTest {
 
         when(servletRequest.getHeader("user-agent")).thenReturn(userAgent);
 
-        assertThat(request.userAgent())
-                .isEqualTo(userAgent);
+        assertThat(request.userAgent()).isEqualTo(userAgent);
 
     }
 
@@ -362,8 +343,7 @@ public class RequestTest {
 
         when(servletRequest.getServerPort()).thenReturn(80);
 
-        assertThat(request.port())
-                .isEqualTo(port);
+        assertThat(request.port()).isEqualTo(port);
 
     }
 
@@ -385,8 +365,7 @@ public class RequestTest {
 
         when(servletRequest.getServletPath()).thenReturn(servletPath);
 
-        assertThat(request.servletPath())
-                .isEqualTo(servletPath);
+        assertThat(request.servletPath()).isEqualTo(servletPath);
 
     }
 
@@ -397,8 +376,7 @@ public class RequestTest {
 
         when(servletRequest.getContextPath()).thenReturn(contextPath);
 
-        assertThat(request.contextPath())
-                .isEqualTo(contextPath);
+        assertThat(request.contextPath()).isEqualTo(contextPath);
 
     }
 
@@ -409,8 +387,7 @@ public class RequestTest {
 
         when(servletRequest.getRequestURL()).thenReturn(new StringBuffer(url));
 
-        assertThat(request.url())
-                .isEqualTo(url);
+        assertThat(request.url()).isEqualTo(url);
 
     }
 
@@ -421,8 +398,7 @@ public class RequestTest {
 
         when(servletRequest.getContentType()).thenReturn(contentType);
 
-        assertThat(request.contentType())
-                .isEqualTo(contentType);
+        assertThat(request.contentType()).isEqualTo(contentType);
 
     }
 
@@ -433,8 +409,7 @@ public class RequestTest {
 
         when(servletRequest.getRemoteAddr()).thenReturn(ip);
 
-        assertThat(request.ip())
-                .isEqualTo(ip);
+        assertThat(request.ip()).isEqualTo(ip);
 
     }
 
@@ -445,8 +420,7 @@ public class RequestTest {
 
         when(servletRequest.getContentLength()).thenReturn(contentLength);
 
-        assertThat(request.contentLength())
-                .isEqualTo(contentLength);
+        assertThat(request.contentLength()).isEqualTo(contentLength);
 
     }
 
@@ -458,8 +432,7 @@ public class RequestTest {
 
         when(servletRequest.getHeader(headerKey)).thenReturn(host);
 
-        assertThat(request.headers(headerKey))
-                .isEqualTo(host);
+        assertThat(request.headers(headerKey)).isEqualTo(host);
 
     }
 
@@ -470,8 +443,7 @@ public class RequestTest {
 
         when(servletRequest.getParameterValues("id")).thenReturn(paramValues);
 
-        assertThat(request.queryParamsValues("id"))
-                .containsExactly(paramValues);
+        assertThat(request.queryParamsValues("id")).containsExactly(paramValues);
 
     }
 
@@ -480,8 +452,7 @@ public class RequestTest {
 
         when(servletRequest.getParameterValues("id")).thenReturn(null);
 
-        assertThat(request.queryParamsValues("id"))
-                .isNull();
+        assertThat(request.queryParamsValues("id")).isNull();
 
     }
 
@@ -496,8 +467,7 @@ public class RequestTest {
 
         Set<String> result = request.queryParams();
 
-        assertThat(result.toArray())
-                .containsExactly(params.keySet().toArray());
+        assertThat(result.toArray()).containsExactly(params.keySet().toArray());
 
     }
 
@@ -508,8 +478,7 @@ public class RequestTest {
 
         when(servletRequest.getRequestURI()).thenReturn(requestURI);
 
-        assertThat(request.uri())
-                .isEqualTo(requestURI);
+        assertThat(request.uri()).isEqualTo(requestURI);
 
     }
 
@@ -520,8 +489,7 @@ public class RequestTest {
 
         when(servletRequest.getProtocol()).thenReturn(protocol);
 
-        assertThat(request.protocol())
-                .isEqualTo(protocol);
+        assertThat(request.protocol()).isEqualTo(protocol);
 
     }
 }

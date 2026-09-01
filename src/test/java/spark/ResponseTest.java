@@ -32,8 +32,7 @@ public class ResponseTest {
     @Test
     public void testConstructor_whenHttpServletResponseParameter() {
         HttpServletResponse returnResponse = KiwiReflection.getTypedFieldValue(response, "response", HttpServletResponse.class);
-        assertThat(returnResponse)
-                .isSameAs(httpServletResponse);
+        assertThat(returnResponse).isSameAs(httpServletResponse);
     }
 
     @Test
@@ -85,8 +84,7 @@ public class ResponseTest {
     @Test
     public void testRaw() {
         HttpServletResponse returnResponse = response.raw();
-        assertThat(returnResponse)
-                .isSameAs(httpServletResponse);
+        assertThat(returnResponse).isSameAs(httpServletResponse);
     }
 
     @Test
@@ -271,10 +269,8 @@ public class ResponseTest {
         verify(httpServletResponse, times(2)).addCookie(cookieArgumentCaptor.capture());
 
         assertAll(
-                () -> assertThat(cookieArgumentCaptor.getValue().getValue())
-                        .isEmpty(),
-                () -> assertThat(cookieArgumentCaptor.getValue().getMaxAge())
-                        .isZero()
+                () -> assertThat(cookieArgumentCaptor.getValue().getValue()).isEmpty(),
+                () -> assertThat(cookieArgumentCaptor.getValue().getMaxAge()).isZero()
         );
     }
 

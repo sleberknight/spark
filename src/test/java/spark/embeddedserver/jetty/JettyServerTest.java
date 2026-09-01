@@ -21,12 +21,9 @@ public class JettyServerTest {
         int idleTimeout = KiwiReflection.getTypedFieldValue(threadPool, "_idleTimeout", Integer.class);
 
         assertAll(
-                () -> assertThat(minThreads)
-                        .isEqualTo(8),
-                () -> assertThat(maxThreads)
-                        .isEqualTo(200),
-                () -> assertThat(idleTimeout)
-                        .isEqualTo(60000)
+                () -> assertThat(minThreads).isEqualTo(8),
+                () -> assertThat(maxThreads).isEqualTo(200),
+                () -> assertThat(idleTimeout).isEqualTo(60000)
         );
     }
 
@@ -41,12 +38,9 @@ public class JettyServerTest {
         int idleTimeout = KiwiReflection.getTypedFieldValue(threadPool, "_idleTimeout", Integer.class);
 
         assertAll(
-                () -> assertThat(minThreads)
-                        .isEqualTo(8),
-                () -> assertThat(maxThreads)
-                        .isEqualTo(9),
-                () -> assertThat(idleTimeout)
-                        .isEqualTo(60000)
+                () -> assertThat(minThreads).isEqualTo(8),
+                () -> assertThat(maxThreads).isEqualTo(9),
+                () -> assertThat(idleTimeout).isEqualTo(60000)
         );
 
     }
