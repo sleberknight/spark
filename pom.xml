@@ -217,13 +217,6 @@
                 <configuration>
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
-                    <!--
-                        Required under JDK 17+ for Mockito's inline mock maker (the default since
-                        Mockito 5.0), which self-attaches a Byte Buddy java agent at runtime.
-                    -->
-                    <argLine>
-                        -Djdk.attach.allowAttachSelf=true
-                    </argLine>
                 </configuration>
             </plugin>
             <plugin>
