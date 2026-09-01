@@ -20,8 +20,8 @@ public class ExceptionMapperTest {
         //then
         exceptionMapper = ExceptionMapper.getServletInstance();
         assertThat(exceptionMapper)
-                .describedAs("Should be equals because ExceptionMapper is a singleton")
-                .isEqualTo(KiwiReflection.getTypedFieldValue(null, servletInstanceField, ExceptionMapper.class));
+                .describedAs("Should be same because ExceptionMapper is a singleton")
+                .isSameAs(KiwiReflection.getTypedFieldValue(null, servletInstanceField, ExceptionMapper.class));
     }
 
     @Test
@@ -32,8 +32,8 @@ public class ExceptionMapperTest {
         //then
         ExceptionMapper exceptionMapper = ExceptionMapper.getServletInstance();
         assertThat(exceptionMapper)
-                .describedAs("Should be equals because ExceptionMapper is a singleton")
-                .isEqualTo(KiwiReflection.getTypedFieldValue(null, servletInstanceField(), ExceptionMapper.class));
+                .describedAs("Should be same because ExceptionMapper is a singleton")
+                .isSameAs(KiwiReflection.getTypedFieldValue(null, servletInstanceField(), ExceptionMapper.class));
     }
 
     private static Field servletInstanceField() {
