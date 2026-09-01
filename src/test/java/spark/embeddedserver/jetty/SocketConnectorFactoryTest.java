@@ -120,9 +120,9 @@ public class SocketConnectorFactoryTest {
         @SuppressWarnings("unchecked")
         Map<String, ConnectionFactory> factories = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_factories"), Map.class);
 
-        assertThat(factories.containsKey("ssl") && factories.get("ssl") != null).isTrue();
-
         SslConnectionFactory sslConnectionFactory = (SslConnectionFactory) factories.get("ssl");
+        assertThat(sslConnectionFactory).isNotNull();
+
         SslContextFactory sslContextFactory = sslConnectionFactory.getSslContextFactory();
 
         assertAll(
