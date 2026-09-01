@@ -17,7 +17,6 @@ public class SparkUtilsTest {
         List<String> actual = SparkUtils.convertRouteToList("/api/person/:id");
 
         assertThat(actual)
-                .describedAs("Should return route as a list of individual elements that path is made of")
                 .isEqualTo(expected);
 
     }
@@ -26,7 +25,6 @@ public class SparkUtilsTest {
     public void testIsParam_whenParameterFormattedAsParm() throws Exception {
 
         assertThat(SparkUtils.isParam(":param"))
-                .describedAs("Should return true because parameter follows convention of a parameter (:paramname)")
                 .isTrue();
 
     }
@@ -35,7 +33,6 @@ public class SparkUtilsTest {
     public void testIsParam_whenParameterNotFormattedAsParm() throws Exception {
 
         assertThat(SparkUtils.isParam(".param"))
-                .describedAs("Should return false because parameter does not follows convention of a parameter (:paramname)")
                 .isFalse();
 
     }
@@ -45,7 +42,6 @@ public class SparkUtilsTest {
     public void testIsSplat_whenParameterIsASplat() throws Exception {
 
         assertThat(SparkUtils.isSplat("*"))
-                .describedAs("Should return true because parameter is a splat (*)")
                 .isTrue();
 
     }
@@ -54,7 +50,6 @@ public class SparkUtilsTest {
     public void testIsSplat_whenParameterIsNotASplat() throws Exception {
 
         assertThat(SparkUtils.isSplat("!"))
-                .describedAs("Should return true because parameter is not a splat (*)")
                 .isFalse();
 
     }

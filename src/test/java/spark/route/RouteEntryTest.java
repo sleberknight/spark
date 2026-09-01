@@ -43,7 +43,6 @@ public class RouteEntryTest {
         entry.path = "/test";
 
         assertThat(entry.matches(HttpMethod.get, "/path"))
-                .describedAs("Should return false because path names did not match")
                 .isFalse();
     }
 
@@ -81,7 +80,6 @@ public class RouteEntryTest {
         entry.path = "/test/";
 
         assertThat(entry.matches(HttpMethod.get, "/test/"))
-                .describedAs("Should return true because route path and path is exactly the same")
                 .isTrue();
     }
 
@@ -93,7 +91,6 @@ public class RouteEntryTest {
         entry.path = "/test/*";
 
         assertThat(entry.matches(HttpMethod.get, "/test/me"))
-                .describedAs("Should return true because path specified is covered by the route path wildcard")
                 .isTrue();
     }
 
@@ -105,7 +102,6 @@ public class RouteEntryTest {
         entry.path = "/test/me";
 
         assertThat(entry.matches(HttpMethod.get, "/test/other"))
-                .describedAs("Should return false because path does not match route path")
                 .isFalse();
     }
 
@@ -117,7 +113,6 @@ public class RouteEntryTest {
         entry.path = "/test/this/resource/*";
 
         assertThat(entry.matches(HttpMethod.get, "/test/this/resource/child/id"))
-                .describedAs("Should return true because path specified is covered by the route path wildcard")
                 .isTrue();
     }
 

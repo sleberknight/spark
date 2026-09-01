@@ -36,7 +36,6 @@ public class ServiceTest {
     @Test
     public void testEmbeddedServerIdentifier_defaultAndSet() {
         assertThat(service.embeddedServerIdentifier())
-                .describedAs("Should return defaultIdentifier()")
                 .isEqualTo(EmbeddedServers.defaultIdentifier());
 
         Object obj = new Object();
@@ -44,7 +43,6 @@ public class ServiceTest {
         service.embeddedServerIdentifier(obj);
 
         assertThat(service.embeddedServerIdentifier())
-                .describedAs("Should return expected obj")
                 .isEqualTo(obj);
     }
 
@@ -85,7 +83,6 @@ public class ServiceTest {
 
         String ipAddress = KiwiReflection.getTypedFieldValue(service, "ipAddress", String.class);
         assertThat(ipAddress)
-                .describedAs("IP address should be set to the IP address that was specified")
                 .isEqualTo(IP_ADDRESS);
     }
 
@@ -104,7 +101,6 @@ public class ServiceTest {
 
         String ipAddress = KiwiReflection.getTypedFieldValue(service, "ipAddress", String.class);
         assertThat(ipAddress)
-                .describedAs("IP address should be set to the IP address that was specified")
                 .isEqualTo(IP_ADDRESS);
     }
 
@@ -123,7 +119,6 @@ public class ServiceTest {
 
         int port = KiwiReflection.getTypedFieldValue(service, "port", Integer.class);
         assertThat(port)
-                .describedAs("Port should be set to the Port that was specified")
                 .isEqualTo(8080);
     }
 
@@ -142,7 +137,6 @@ public class ServiceTest {
 
         int port = KiwiReflection.getTypedFieldValue(service, "port", Integer.class);
         assertThat(port)
-                .describedAs("Port should be set to the Port that was specified")
                 .isEqualTo(8080);
     }
 
@@ -173,7 +167,6 @@ public class ServiceTest {
         int actualPort = service.port();
 
         assertThat(actualPort)
-                .describedAs("Port retrieved should be the port setted")
                 .isEqualTo(expectedPort);
     }
 
@@ -185,7 +178,6 @@ public class ServiceTest {
         int actualPort = service.port();
 
         assertThat(actualPort)
-                .describedAs("Port retrieved should be the port setted")
                 .isEqualTo(expectedPort);
     }
 
@@ -197,13 +189,10 @@ public class ServiceTest {
         int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
         assertAll(
                 () -> assertThat(maxThreads)
-                        .describedAs("Should return maxThreads specified")
                         .isEqualTo(100),
                 () -> assertThat(minThreads)
-                        .describedAs("Should return minThreads specified")
                         .isEqualTo(-1),
                 () -> assertThat(threadIdleTimeoutMillis)
-                        .describedAs("Should return threadIdleTimeoutMillis specified")
                         .isEqualTo(-1)
         );
     }
@@ -216,13 +205,10 @@ public class ServiceTest {
         int threadIdleTimeoutMillis = KiwiReflection.getTypedFieldValue(service, "threadIdleTimeoutMillis", Integer.class);
         assertAll(
                 () -> assertThat(maxThreads)
-                        .describedAs("Should return maxThreads specified")
                         .isEqualTo(100),
                 () -> assertThat(minThreads)
-                        .describedAs("Should return minThreads specified")
                         .isEqualTo(50),
                 () -> assertThat(threadIdleTimeoutMillis)
-                        .describedAs("Should return threadIdleTimeoutMillis specified")
                         .isEqualTo(75)
         );
     }
@@ -242,19 +228,14 @@ public class ServiceTest {
         SslStores sslStores = KiwiReflection.getTypedFieldValue(service, "sslStores", SslStores.class);
         assertAll(
                 () -> assertThat(sslStores)
-                        .describedAs("Should return a SslStores because we configured it to have one")
                         .isNotNull(),
                 () -> assertThat(sslStores.keystoreFile())
-                        .describedAs("Should return keystoreFile from SslStores")
                         .isEqualTo("keyfile"),
                 () -> assertThat(sslStores.keystorePassword())
-                        .describedAs("Should return keystorePassword from SslStores")
                         .isEqualTo("keypassword"),
                 () -> assertThat(sslStores.trustStoreFile())
-                        .describedAs("Should return trustStoreFile from SslStores")
                         .isEqualTo("truststorefile"),
                 () -> assertThat(sslStores.trustStorePassword())
-                        .describedAs("Should return trustStorePassword from SslStores")
                         .isEqualTo("truststorepassword")
         );
     }

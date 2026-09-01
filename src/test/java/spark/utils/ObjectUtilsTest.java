@@ -9,7 +9,6 @@ public class ObjectUtilsTest {
     public void testIsEmpty_whenArrayIsEmpty() throws Exception {
 
         assertThat(ObjectUtils.isEmpty(new Object[]{}))
-                .describedAs("Should return false because array is empty")
                 .isTrue();
 
     }
@@ -18,7 +17,6 @@ public class ObjectUtilsTest {
     public void testIsEmpty_whenArrayIsNotEmpty() throws Exception {
 
         assertThat(ObjectUtils.isEmpty(new Integer[]{1,2}))
-                .describedAs("Should return false because array is not empty")
                 .isFalse();
 
     }

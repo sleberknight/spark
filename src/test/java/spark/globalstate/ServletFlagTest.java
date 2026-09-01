@@ -21,7 +21,6 @@ public class ServletFlagTest {
 
         AtomicBoolean isRunningFromServlet = KiwiReflection.getTypedFieldValue(null, isRunningFromServletField(), AtomicBoolean.class);
         assertThat(isRunningFromServlet.get())
-                .describedAs("Should be false because it is the default value")
                 .isFalse();
     }
 
@@ -32,7 +31,6 @@ public class ServletFlagTest {
         AtomicBoolean isRunningFromServlet = KiwiReflection.getTypedFieldValue(null, isRunningFromServletField(), AtomicBoolean.class);
 
         assertThat(isRunningFromServlet.get())
-                .describedAs("Should be true because it flag has been set after runFromServlet")
                 .isTrue();
     }
 
@@ -40,7 +38,6 @@ public class ServletFlagTest {
     public void testIsRunningFromServlet_whenDefault() {
 
         assertThat(ServletFlag.isRunningFromServlet())
-                .describedAs("Should be false because it is the default value")
                 .isFalse();
 
     }
@@ -50,7 +47,6 @@ public class ServletFlagTest {
 
         ServletFlag.runFromServlet();
         assertThat(ServletFlag.isRunningFromServlet())
-                .describedAs("Should be true because call to runFromServlet has been made")
                 .isTrue();
     }
 

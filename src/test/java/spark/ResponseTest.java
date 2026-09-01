@@ -33,7 +33,6 @@ public class ResponseTest {
     public void testConstructor_whenHttpServletResponseParameter() {
         HttpServletResponse returnResponse = KiwiReflection.getTypedFieldValue(response, "response", HttpServletResponse.class);
         assertThat(returnResponse)
-                .describedAs("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse")
                 .isSameAs(httpServletResponse);
     }
 
@@ -71,7 +70,7 @@ public class ResponseTest {
 
         response.body(finalBody);
         String returnBody = KiwiReflection.getTypedFieldValue(response, "body", String.class);
-        assertThat(returnBody).describedAs("Should return body specified").isEqualTo(finalBody);
+        assertThat(returnBody).isEqualTo(finalBody);
     }
 
     @Test
@@ -80,14 +79,13 @@ public class ResponseTest {
 
         KiwiReflection.setFieldValue(response, "body", finalBody);
         String returnBody = response.body();
-        assertThat(returnBody).describedAs("Should return body specified").isEqualTo(finalBody);
+        assertThat(returnBody).isEqualTo(finalBody);
     }
 
     @Test
     public void testRaw() {
         HttpServletResponse returnResponse = response.raw();
         assertThat(returnResponse)
-                .describedAs("Should be the same the HttpServletResponse object for httpServletResponse and returnResponse")
                 .isSameAs(httpServletResponse);
     }
 
@@ -135,12 +133,12 @@ public class ResponseTest {
                                        boolean secured,
                                        boolean httpOnly) {
         assertAll(
-                () -> assertThat(cookie.getDomain()).describedAs("Should return cookie domain specified").isEqualTo(domain),
-                () -> assertThat(cookie.getPath()).describedAs("Should return cookie path specified").isEqualTo(path),
-                () -> assertThat(cookie.getValue()).describedAs("Should return cookie value specified").isEqualTo(value),
-                () -> assertThat(cookie.getMaxAge()).describedAs("Should return cookie max age specified").isEqualTo(maxAge),
-                () -> assertThat(cookie.getSecure()).describedAs("Should return cookie secure specified").isEqualTo(secured),
-                () -> assertThat(cookie.isHttpOnly()).describedAs("Should return cookie http only specified").isEqualTo(httpOnly)
+                () -> assertThat(cookie.getDomain()).isEqualTo(domain),
+                () -> assertThat(cookie.getPath()).isEqualTo(path),
+                () -> assertThat(cookie.getValue()).isEqualTo(value),
+                () -> assertThat(cookie.getMaxAge()).isEqualTo(maxAge),
+                () -> assertThat(cookie.getSecure()).isEqualTo(secured),
+                () -> assertThat(cookie.isHttpOnly()).isEqualTo(httpOnly)
         );
     }
 
@@ -274,10 +272,8 @@ public class ResponseTest {
 
         assertAll(
                 () -> assertThat(cookieArgumentCaptor.getValue().getValue())
-                        .describedAs("Should return empty value for the given cookie name")
                         .isEmpty(),
                 () -> assertThat(cookieArgumentCaptor.getValue().getMaxAge())
-                        .describedAs("Should return an 0 for maximum cookie age")
                         .isZero()
         );
     }

@@ -53,13 +53,10 @@ public class SocketConnectorFactoryTest {
 
         assertAll(
                 () -> assertThat(internalHost)
-                        .describedAs("Server Connector Host should be set to the specified server")
                         .isEqualTo(host),
                 () -> assertThat(internalPort)
-                        .describedAs("Server Connector Port should be set to the specified port")
                         .isEqualTo(port),
                 () -> assertThat(server)
-                        .describedAs("Server Connector Server should be set to the specified server")
                         .isEqualTo(internalServerConnector)
         );
     }
@@ -120,10 +117,8 @@ public class SocketConnectorFactoryTest {
 
         assertAll(
                 () -> assertThat(internalHost)
-                        .describedAs("Server Connector Host should be set to the specified server")
                         .isEqualTo(host),
                 () -> assertThat(internalPort)
-                        .describedAs("Server Connector Port should be set to the specified port")
                         .isEqualTo(port)
         );
 
@@ -131,7 +126,6 @@ public class SocketConnectorFactoryTest {
         Map<String, ConnectionFactory> factories = KiwiReflection.getTypedFieldValue(serverConnector, declaredField(ServerConnector.class, "_factories"), Map.class);
 
         assertThat(factories.containsKey("ssl") && factories.get("ssl") != null)
-                .describedAs("Should return true because factory for SSL should have been set")
                 .isTrue();
 
         SslConnectionFactory sslConnectionFactory = (SslConnectionFactory) factories.get("ssl");
@@ -139,10 +133,8 @@ public class SocketConnectorFactoryTest {
 
         assertAll(
                 () -> assertThat(sslContextFactory.getKeyStoreResource().getFileName())
-                        .describedAs("Should return the Keystore file specified")
                         .isEqualTo(keystoreFileName),
                 () -> assertThat(sslContextFactory.getTrustStoreResource().getFileName())
-                        .describedAs("Should return the Truststore file specified")
                         .isEqualTo(truststoreFileName)
         );
 

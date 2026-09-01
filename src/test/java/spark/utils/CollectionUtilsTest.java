@@ -14,7 +14,6 @@ public class CollectionUtilsTest {
         Collection<Object> testCollection = new ArrayList<>();
 
         assertThat(CollectionUtils.isEmpty(testCollection))
-                .describedAs("Should return true because collection is empty")
                 .isTrue();
 
     }
@@ -27,7 +26,6 @@ public class CollectionUtilsTest {
         testCollection.add(2);
 
         assertThat(CollectionUtils.isEmpty(testCollection))
-                .describedAs("Should return false because collection is not empty")
                 .isFalse();
 
     }
@@ -38,7 +36,6 @@ public class CollectionUtilsTest {
         Collection<Integer> testCollection = null;
 
         assertThat(CollectionUtils.isEmpty(testCollection))
-                .describedAs("Should return true because collection is null")
                 .isTrue();
 
     }
@@ -49,7 +46,6 @@ public class CollectionUtilsTest {
         Collection<Object> testCollection = new ArrayList<>();
 
         assertThat(CollectionUtils.isNotEmpty(testCollection))
-                .describedAs("Should return false because collection is empty")
                 .isFalse();
 
     }
@@ -62,7 +58,6 @@ public class CollectionUtilsTest {
         testCollection.add(2);
 
         assertThat(CollectionUtils.isNotEmpty(testCollection))
-                .describedAs("Should return true because collection is not empty")
                 .isTrue();
 
     }
@@ -73,7 +68,6 @@ public class CollectionUtilsTest {
         Collection<Object> testCollection = null;
 
         assertThat(CollectionUtils.isNotEmpty(testCollection))
-                .describedAs("Should return false because collection is null")
                 .isFalse();
 
     }
